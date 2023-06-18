@@ -237,9 +237,9 @@ if __name__ == '__main__':
 
     # Algo hyperparameters - you can change these and may achieve better result
     parser.add_argument('-batch_size', default=200, type=int)
-    parser.add_argument('-p', default=3, type=int)
-    parser.add_argument('-q', default=3, type=int)
-    parser.add_argument('-hidden_dims', default=3 * (50,), type=tuple)
+    parser.add_argument('-p', default=3, type=int) # the length of past path p
+    parser.add_argument('-q', default=3, type=int) # the length of future path q
+    parser.add_argument('-hidden_dims', default=3 * (50,), type=tuple) # TODO: the hidden dimension of the generator and the discriminator??? by Bo
     parser.add_argument('-total_steps', default=1000, type=int)
     
     # Parsing command-line arguments
