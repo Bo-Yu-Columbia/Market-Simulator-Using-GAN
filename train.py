@@ -104,7 +104,11 @@ def run(algo_id, base_config, base_dir, dataset, spec, data_params={}):
     algo.fit()
 
     # After the training, we create a summary of the experiment
-    create_summary(dataset, base_config.device, algo.G, base_config.p, base_config.q, x_real)
+    #create_summary(dataset, base_config.device, algo.G, base_config.p, base_config.q, x_real)
+    xnot_long=create_summary(dataset, base_config.device, algo.G, base_config.p, base_config.q, x_real)
+    plt.plot(xnot_long.cpu().numpy()[0, :])
+    savefig('xnot_long.png', experiment_directory)   
+
 
     # Save the summary as an image in the experiment directory
     savefig('summary.png', experiment_directory)
