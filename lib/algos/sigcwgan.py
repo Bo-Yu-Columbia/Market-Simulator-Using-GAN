@@ -28,8 +28,10 @@ from lib.utils import sample_indices, to_numpy
 
 # Tunahan Try 1:
 def sigcwgan_loss(sig_pred: torch.Tensor, sig_fake_conditional_expectation: torch.Tensor):
-    # Calculate the Wasserstein distance between the predicted and actual signatures
-    return torch.mean(sig_pred - sig_fake_conditional_expectation)
+    # This function defines the loss function for the SigCWGAN.
+    # The loss is calculated as the mean 2-norm of the difference between the predicted and the actual signature.
+    return torch.norm(sig_pred - sig_fake_conditional_expectation, p=2, dim=1).mean()
+
 
 @dataclass
 class SigCWGANConfig:
@@ -116,7 +118,10 @@ class SigCWGAN(BaseAlgo):
         sigs_fake_ce, x_fake = sample_sig_fake(self.G, self.q, self.sig_config, x_past)
 
         # Compute the loss between the real and fake signatures
-        loss = sigcwgan_loss(sigs_pred, sigs_fake_ce)
+        # loss = sigcwgan_loss(sigs_pred, sigs_fake_ce)
+        # loss = sigcwgan_loss_new(sigs_pred, sigs_fake_ce)
+        # loss = congan_loss(sigs_pred, sigs_fake_ce)
+        loss = hinge_gan_loss(sigs_pred, sigs_fake_ce)
 
         loss.backward()  # Compute the gradients by backpropagation
 
