@@ -222,7 +222,7 @@ def evaluate_benchmarks(algos, base_dir, datasets, loss_fn, use_cuda=False):
             for experiment_dir in os.listdir(dataset_path_path):
                 # Initialize an empty DataFrame to store the summary of all experiments
                 df = pd.DataFrame(columns=[])
-                experiment_path = os.path.join(dataset_path, experiment_dir)
+                experiment_path = os.path.join(dataset_path_path, experiment_dir)
 
                 print("###########yayyyyy", experiment_path)
 
