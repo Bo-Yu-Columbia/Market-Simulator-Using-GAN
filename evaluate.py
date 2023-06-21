@@ -257,7 +257,7 @@ def evaluate_benchmarks(algos, base_dir, datasets, loss_fn, use_cuda=False):
 
                 # Save the DataFrame as a CSV file
                 df_dst_path = "_".join([base_dir, str(loss_fn_path), dataset_path, experiment_dir])
-                df_dst_path_final = os.path.join(base_dir, df_dst_path)
+                df_dst_path_final = os.path.join(base_dir, "some_results", df_dst_path)
                 if not os.path.exists(df_dst_path_final):
                     os.makedirs(df_dst_path_final)
                 df_dst_path_final_name = os.path.join(df_dst_path_final, 'summary.csv')
