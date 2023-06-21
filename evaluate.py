@@ -211,7 +211,7 @@ def evaluate_benchmarks(algos, base_dir, datasets, loss_fn, use_cuda=False):
     
     # Iterate over all directories in the base directory
     for dataset_dir in os.listdir(base_dir):
-        dataset_path = os.path.join(base_dir,str(loss_fn), dataset_dir)
+        dataset_path = os.path.join(base_dir, dataset_dir)
         
         # Skip directories that are not in the specified datasets
         # if dataset_dir not in datasets:
