@@ -256,9 +256,13 @@ def evaluate_benchmarks(algos, base_dir, datasets, loss_fn, use_cuda=False):
                         df = pd.concat([df, pd.DataFrame([experiment_summary])], ignore_index=True)
 
                 # Save the DataFrame as a CSV file
-                df_dst_path = "_".join(base_dir, str(loss_fn_path), dataset_path, experiment_dir, 'summary.csv')
+                df_dst_path = "_".join([base_dir, str(loss_fn_path), dataset_path, experiment_dir])
+                df_dst_path_final = os.path.join(base_dir, df_dst_path)
+                if not os.path.exists(df_dst_path_final):
+                    os.makedirs(df_dst_path_final)
+                df_dst_path_final_name = os.path.join(df_dst_path_final, 'summary.csv')
                 print(df)
-                df.to_csv(df_dst_path, decimal='.', sep=';', float_format='%.5f', index=False)
+                df.to_csv(df_dst_path_final_name, decimal='.', sep=';', float_format='%.5f', index=False)
 
 
 if __name__ == '__main__':
