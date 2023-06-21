@@ -75,7 +75,7 @@ def get_algo(algo_id, base_config, dataset, data_params, x_real):
     return algo
 
 
-def run(algo_id, base_config, base_dir, dataset, spec, data_params={}):
+def run(algo_id, base_config, base_dir, dataset, spec, result_dir, data_params={}):
     """ 
     Main function that runs the algorithm on the dataset and saves the results.
     
@@ -88,7 +88,7 @@ def run(algo_id, base_config, base_dir, dataset, spec, data_params={}):
     data_params: The parameters of the dataset.
     """
     print('Executing: %s, %s, %s' % (algo_id, dataset, spec))
-    experiment_directory = pt.join(base_dir, dataset, spec, 'seed={}'.format(base_config.seed), algo_id)
+    experiment_directory = pt.join(base_dir, dataset, spec, 'seed={}'.format(base_config.seed), algo_id, result_dir)
     if not pt.exists(experiment_directory):
         os.makedirs(experiment_directory)
     set_seed(base_config.seed)
@@ -165,6 +165,19 @@ def get_dataset_configuration(dataset):
         raise Exception('%s not a valid data type.' % dataset)
     return generator
 
+def name_train_script_result_dir(p, q, hidden_dims):
+    """
+    Creates a directory name for the training script results.
+
+    Parameters:
+    p: The length of past path p.
+    q: The length of future path q.
+    hidden_dims: The hidden dimensions of the generator.
+
+    Returns:
+    A string representing the directory name.
+    """
+    return 'p={}_q={}_hidden_dims={}'.format(str(p), str(q), str(d))
 
 def main(args):
     """
@@ -205,6 +218,7 @@ def main(args):
                     total_steps=args.total_steps,
                 )
                 # Get the dataset configuration
+                result_dir = name_train_script_result_dir(args.p, args.q, args.hidden_dims)
                 generator = get_dataset_configuration(dataset)
                 for spec, data_params in generator:
                     run(
@@ -214,6 +228,7 @@ def main(args):
                         dataset=dataset,
                         base_dir=args.base_dir,
                         spec=spec,
+                        result_dir=result_dir,
                     )
 
 
