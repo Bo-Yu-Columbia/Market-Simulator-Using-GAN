@@ -210,49 +210,50 @@ def evaluate_benchmarks(algos, base_dir, datasets, loss_fn, use_cuda=False):
     print(msg)
     
     # Iterate over all directories in the base directory
-    for dataset_dir in os.listdir(base_dir):
-        dataset_path = os.path.join(base_dir,str(loss_fn))
-        
-        # Skip directories that are not in the specified datasets
-        # if dataset_dir not in datasets:
-        #     continue
-            
-        # Iterate over all experiments in the current dataset directory
-        for experiment_dir in os.listdir(dataset_path):
-            # Initialize an empty DataFrame to store the summary of all experiments
-            df = pd.DataFrame(columns=[])
-            experiment_path = os.path.join(dataset_path, experiment_dir)
-            
-            # Iterate over all seed directories in the current experiment directory
-            for seed_dir in get_top_dirs(experiment_path):
-                seed_path = os.path.join(experiment_path, seed_dir)
-                
-                # Iterate over all algorithm directories in the current seed directory
-                for algo_dir in get_top_dirs(seed_path):
-                    # Skip directories that are not in the specified algorithms
-                    if algo_dir not in algos:
-                        continue
-                        
-                    print(dataset_dir, experiment_dir, algo_dir)
-                    algo_path = os.path.join(seed_path, algo_dir)
-                    
-                    # Evaluate the generator for the current algorithm and seed
-                    experiment_summary = evaluate_generator(
-                        model_name=algo_dir,
-                        seed=seed_dir.split('_')[-1],
-                        experiment_dir=algo_path,
-                        dataset=dataset_dir,
-                        use_cuda=use_cuda
-                    )
-                    # Add relevant parameters used during training to the experiment summary
-                    experiment_summary = complete_experiment_summary(dataset_dir, experiment_dir, experiment_summary)
-                    
-                    # Add the experiment summary to the DataFrame
-                    df = pd.concat([df, pd.DataFrame([experiment_summary])], ignore_index=True)
-                    
-            # Save the DataFrame as a CSV file
-            df_dst_path = os.path.join(base_dir, dataset_dir, experiment_dir, 'summary.csv')
-            df.to_csv(df_dst_path, decimal='.', sep=';', float_format='%.5f', index=False)
+    for loss_fn_path in os.listdir(base_dir): # numerical_results, 1 2
+        loss_fn_path_path = os.path.join(base_dir,str(loss_fn_path))
+        for dataset_path in os.listdir(loss_fn_path_path):
+            dataset_path_path = os.path.join(loss_fn_path_path,str(dataset_path))
+            # Skip directories that are not in the specified datasets
+            # if dataset_dir not in datasets:
+            #     continue
+
+            # Iterate over all experiments in the current dataset directory
+            for experiment_dir in os.listdir(dataset_path_path):
+                # Initialize an empty DataFrame to store the summary of all experiments
+                df = pd.DataFrame(columns=[])
+                experiment_path = os.path.join(dataset_path, experiment_dir)
+
+                # Iterate over all seed directories in the current experiment directory
+                for seed_dir in get_top_dirs(experiment_path):
+                    seed_path = os.path.join(experiment_path, seed_dir)
+
+                    # Iterate over all algorithm directories in the current seed directory
+                    for algo_dir in get_top_dirs(seed_path):
+                        # Skip directories that are not in the specified algorithms
+                        if algo_dir not in algos:
+                            continue
+
+                        print(dataset_dir, experiment_dir, algo_dir)
+                        algo_path = os.path.join(seed_path, algo_dir)
+
+                        # Evaluate the generator for the current algorithm and seed
+                        experiment_summary = evaluate_generator(
+                            model_name=algo_dir,
+                            seed=seed_dir.split('_')[-1],
+                            experiment_dir=algo_path,
+                            dataset=dataset_dir,
+                            use_cuda=use_cuda
+                        )
+                        # Add relevant parameters used during training to the experiment summary
+                        experiment_summary = complete_experiment_summary(dataset_dir, experiment_dir, experiment_summary)
+
+                        # Add the experiment summary to the DataFrame
+                        df = pd.concat([df, pd.DataFrame([experiment_summary])], ignore_index=True)
+
+                # Save the DataFrame as a CSV file
+                df_dst_path = os.path.join(base_dir, dataset_dir, experiment_dir, 'summary.csv')
+                df.to_csv(df_dst_path, decimal='.', sep=';', float_format='%.5f', index=False)
 
 
 if __name__ == '__main__':
