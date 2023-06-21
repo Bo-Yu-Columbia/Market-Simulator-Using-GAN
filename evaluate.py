@@ -211,9 +211,9 @@ def evaluate_benchmarks(algos, base_dir, datasets, loss_fn, use_cuda=False):
     
     # Iterate over all directories in the base directory
     for loss_fn_path in os.listdir(base_dir): # numerical_results, 1 2
-        loss_fn_path_path = os.path.join(base_dir,str(loss_fn_path))
-        for dataset_path in os.listdir(loss_fn_path_path):
-            dataset_path_path = os.path.join(loss_fn_path_path,str(dataset_path))
+        loss_fn_path_path = os.path.join(base_dir,str(loss_fn_path)) # numerical_results/1
+        for dataset_path in os.listdir(loss_fn_path_path): # numerical_results/1
+            dataset_path_path = os.path.join(loss_fn_path_path,str(dataset_path)) # numerical_results/1/STOCKS
             # Skip directories that are not in the specified datasets
             # if dataset_dir not in datasets:
             #     continue
@@ -223,6 +223,8 @@ def evaluate_benchmarks(algos, base_dir, datasets, loss_fn, use_cuda=False):
                 # Initialize an empty DataFrame to store the summary of all experiments
                 df = pd.DataFrame(columns=[])
                 experiment_path = os.path.join(dataset_path, experiment_dir)
+
+                print("###########yayyyyy", experiment_path)
 
                 # Iterate over all seed directories in the current experiment directory
                 for seed_dir in get_top_dirs(experiment_path):
