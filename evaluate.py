@@ -200,7 +200,7 @@ def get_top_dirs(path):
     return [directory for directory in os.listdir(path) if os.path.isdir(os.path.join(path, directory))]
 
 
-def evaluate_benchmarks(algos, base_dir, datasets, use_cuda=False):
+def evaluate_benchmarks(algos, base_dir, datasets, loss_fn, use_cuda=False):
     # This function evaluates the performance of different algorithms (GANS, VAEs, etc.) on multiple datasets.
     # For each algorithm and each dataset, it computes a summary of the experiment and saves it as a CSV file.
     # The evaluation can be run on either CPU or GPU depending on the 'use_cuda' flag.
@@ -211,11 +211,11 @@ def evaluate_benchmarks(algos, base_dir, datasets, use_cuda=False):
     
     # Iterate over all directories in the base directory
     for dataset_dir in os.listdir(base_dir):
-        dataset_path = os.path.join(base_dir, dataset_dir)
+        dataset_path = os.path.join(base_dir,str(loss_fn), dataset_dir)
         
         # Skip directories that are not in the specified datasets
-        if dataset_dir not in datasets:
-            continue
+        # if dataset_dir not in datasets:
+        #     continue
             
         # Iterate over all experiments in the current dataset directory
         for experiment_dir in os.listdir(dataset_path):
@@ -261,7 +261,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Turn cuda off / on during evalution.')
     parser.add_argument('-base_dir', default='./numerical_results', type=str)
     parser.add_argument('-use_cuda', action='store_true')
-    parser.add_argument('-datasets', default=['YIELD', 'EXCHANGE', 'ECG', 'ARCH', 'STOCKS', 'VAR', ], nargs="+")
-    parser.add_argument('-algos', default=['SigCWGAN', 'GMMN', 'RCGAN', 'TimeGAN', 'RCWGAN', ], nargs="+")
+    parser.add_argument('-datasets', default=['STOCKS'], nargs="+")
+    parser.add_argument('-algos', default=['SigCWGAN', 'GMMN'], nargs="+")
+    parser.add_argument('-loss_fn', default=1, type=int)
     args = parser.parse_args()
-    evaluate_benchmarks(base_dir=args.base_dir, use_cuda=args.use_cuda, datasets=args.datasets, algos=args.algos)
+    evaluate_benchmarks(base_dir=args.base_dir, use_cuda=args.use_cuda, datasets=args.datasets, algos=args.algos, loss_fn = args.loss_fn

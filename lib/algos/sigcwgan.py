@@ -163,16 +163,16 @@ class SigCWGAN(BaseAlgo):
             loss = hinge_gan_loss(sigs_pred, sigs_fake_ce)
 
         elif self.loss_fn == 5:
-            loss = self.mse_loss(sigs_pred, sigs_fake_ce)
+            loss = mse_loss(sigs_pred, sigs_fake_ce)
 
         elif self.loss_fn == 6:
-            loss = self.mae_loss(sigs_pred, sigs_fake_ce)
+            loss = mae_loss(sigs_pred, sigs_fake_ce)
 
         elif self.loss_fn == 7:
-            loss = self.kld_loss(sigs_pred, sigs_fake_ce)
+            loss = kld_loss(sigs_pred, sigs_fake_ce)
 
         elif self.loss_fn == 8:
-            loss = self.bce_loss(sigs_pred, sigs_fake_ce)
+            loss = bce_loss(sigs_pred, sigs_fake_ce)
         # Compute the loss between the real and fake signatures
         # loss = sigcwgan_loss(sigs_pred, sigs_fake_ce)
         # loss = sigcwgan_loss_new(sigs_pred, sigs_fake_ce)
