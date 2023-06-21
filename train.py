@@ -53,7 +53,7 @@ def set_seed(seed):
     np.random.seed(seed)
 
 
-def get_algo(algo_id, base_config, dataset, data_params, x_real):
+def get_algo(algo_id, base_config, dataset, data_params, x_real, loss_fn):
     """
     Retrieves the desired algorithm configuration.
     
@@ -69,13 +69,13 @@ def get_algo(algo_id, base_config, dataset, data_params, x_real):
     """
     if algo_id == 'SigCWGAN':
         algo_config = get_algo_config(dataset, data_params)
-        algo = ALGOS[algo_id](x_real=x_real, config=algo_config, base_config=base_config)
+        algo = ALGOS[algo_id](x_real=x_real, config=algo_config, base_config=base_config, loss_fn=loss_fn)
     else:
         algo = ALGOS[algo_id](x_real=x_real, base_config=base_config)
     return algo
 
 
-def run(algo_id, base_config, base_dir, dataset, spec, result_dir, data_params={}):
+def run(algo_id, base_config, base_dir, dataset, spec, result_dir, data_params={}, loss_fn):
     """ 
     Main function that runs the algorithm on the dataset and saves the results.
     
@@ -98,7 +98,7 @@ def run(algo_id, base_config, base_dir, dataset, spec, result_dir, data_params={
     x_real_train, x_real_test = x_real[:ind_train], x_real[ind_train:]
 
     # Initialize the chosen algorithm with the real data and the configurations
-    algo = get_algo(algo_id, base_config, dataset, data_params, x_real)
+    algo = get_algo(algo_id, base_config, dataset, data_params, x_real, loss_fn)
 
     # Train the algorithm
     algo.fit()
@@ -229,6 +229,7 @@ def main(args):
                         base_dir=args.base_dir,
                         spec=spec,
                         result_dir=result_dir,
+                        loss_fn=args.loss_fn,
                     )
 
 
@@ -256,6 +257,7 @@ if __name__ == '__main__':
     parser.add_argument('-q', default=3, type=int) # the length of future path q
     parser.add_argument('-hidden_dims', default=3 * (50,), type=tuple) # TODO: the hidden dimension of the generator and the discriminator??? by Bo
     parser.add_argument('-total_steps', default=1000, type=int)
+    parser.add_argument('-loss_fn', default=1, type=int)
     
     # Parsing command-line arguments
     args = parser.parse_args()

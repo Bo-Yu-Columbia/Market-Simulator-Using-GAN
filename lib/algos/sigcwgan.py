@@ -45,7 +45,23 @@ def hinge_gan_loss(D_real: torch.Tensor, D_fake: torch.Tensor):
     loss = loss_real + loss_fake
     return loss
 
+def mse_loss(sig_pred: torch.Tensor, sig_fake_conditional_expectation: torch.Tensor):
+    # Calculate the mean squared error loss
+    return torch.mean((sig_pred - sig_fake_conditional_expectation) ** 2)
 
+def mae_loss(sig_pred: torch.Tensor, sig_fake_conditional_expectation: torch.Tensor):
+    # Calculate the mean absolute error loss
+    return torch.mean(torch.abs(sig_pred - sig_fake_conditional_expectation))
+
+def kld_loss(sig_pred: torch.Tensor, sig_fake_conditional_expectation: torch.Tensor):
+    # Calculate the Kullback-Leibler divergence loss
+    loss = torch.kl_div(torch.log(sig_pred), sig_fake_conditional_expectation, reduction='batchmean')
+    return loss
+
+def bce_loss(sig_pred: torch.Tensor, sig_fake_conditional_expectation: torch.Tensor):
+    # Calculate the binary cross entropy loss
+    loss = torch.nn.BCELoss()
+    return loss(sig_pred, sig_fake_conditional_expectation)
 
 
 
@@ -98,6 +114,7 @@ class SigCWGAN(BaseAlgo):
             base_config: BaseConfig,  # Basic configuration for the base GAN algorithm
             config: SigCWGANConfig,  # Configuration specific for the SigCWGAN model
             x_real: torch.Tensor,  # Real data samples
+            loss_fn  # Loss function
     ):
         super(SigCWGAN, self).__init__(base_config, x_real)  # Initialize the base GAN with base_config and real data
         self.sig_config = config  # Assign passed SigCWGAN configuration to the instance variable
@@ -113,6 +130,7 @@ class SigCWGAN(BaseAlgo):
         # Set up an optimizer and a learning rate scheduler for the generator
         self.G_optimizer = optim.Adam(self.G.parameters(), lr=1e-2)
         self.G_scheduler = optim.lr_scheduler.StepLR(self.G_optimizer, step_size=100, gamma=0.9)
+        self.loss_fn = loss_fn
 
     # This method randomly samples a batch of signatures and corresponding past data points.
     # These samples are cloned and moved to the device (GPU/CPU) where the model is running.
@@ -132,12 +150,36 @@ class SigCWGAN(BaseAlgo):
 
         # Generate fake signatures and fake data points using the generator
         sigs_fake_ce, x_fake = sample_sig_fake(self.G, self.q, self.sig_config, x_past)
+        if self.loss_fn = 1:
+            loss = sigcwgan_loss(sigs_pred, sigs_fake_ce)
 
+        elif self.loss_fn = 2:
+            loss = sigcwgan_loss_new(sigs_pred, sigs_fake_ce)
+
+        elif self.loss_fn = 3:
+            loss = congan_loss(sigs_pred, sigs_fake_ce)
+
+        elif self.loss_fn = 4:
+            loss = hinge_gan_loss(sigs_pred, sigs_fake_ce)
+
+        elif self.loss_fn = 5:
+            loss = self.mse_loss(sigs_pred, sigs_fake_ce)
+
+        elif self.loss_fn = 6:
+            loss = self.mae_loss(sigs_pred, sigs_fake_ce)
+
+        elif self.loss_fn = 7:
+            loss = self.kld_loss(sigs_pred, sigs_fake_ce)
+
+        elif self.loss_fn = 8:
+            loss = self.bce_loss(sigs_pred, sigs_fake_ce)
         # Compute the loss between the real and fake signatures
         # loss = sigcwgan_loss(sigs_pred, sigs_fake_ce)
         # loss = sigcwgan_loss_new(sigs_pred, sigs_fake_ce)
         # loss = congan_loss(sigs_pred, sigs_fake_ce)
-        loss = hinge_gan_loss(sigs_pred, sigs_fake_ce)
+        # loss = hinge_gan_loss(sigs_pred, sigs_fake_ce)
+        # loss = self.loss_fn(sigs_pred, sigs_fake_ce)
+
 
         loss.backward()  # Compute the gradients by backpropagation
 
