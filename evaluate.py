@@ -255,7 +255,7 @@ def evaluate_benchmarks(algos, base_dir, datasets, loss_fn, use_cuda=False):
 
                 # Save the DataFrame as a CSV file
                 df_dst_path = os.path.join(base_dir, loss_fn_path, dataset_path, experiment_dir, 'summary.csv')
-                df.show()
+                print(df)
                 # df.to_csv(df_dst_path, decimal='.', sep=';', float_format='%.5f', index=False)
 
 
