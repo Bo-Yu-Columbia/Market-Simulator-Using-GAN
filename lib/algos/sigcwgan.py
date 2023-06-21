@@ -21,11 +21,15 @@ from lib.augmentations import augment_path_and_compute_signatures
 from lib.utils import sample_indices, to_numpy
 
 
-def sigcwgan_loss(sig_pred: torch.Tensor, sig_fake_conditional_expectation: torch.Tensor):
-    # This function defines the loss function for the SigCWGAN.
-    # The loss is calculated as the mean 2-norm of the difference between the predicted and the actual signature.
-    return torch.norm(sig_pred - sig_fake_conditional_expectation, p=2, dim=1).mean()
+# def sigcwgan_loss(sig_pred: torch.Tensor, sig_fake_conditional_expectation: torch.Tensor):
+#     # This function defines the loss function for the SigCWGAN.
+#     # The loss is calculated as the mean 2-norm of the difference between the predicted and the actual signature.
+#     return torch.norm(sig_pred - sig_fake_conditional_expectation, p=2, dim=1).mean()
 
+# Tunahan Try 1:
+def sigcwgan_loss(sig_pred: torch.Tensor, sig_fake_conditional_expectation: torch.Tensor):
+    # Calculate the Wasserstein distance between the predicted and actual signatures
+    return torch.mean(sig_pred - sig_fake_conditional_expectation)
 
 @dataclass
 class SigCWGANConfig:
