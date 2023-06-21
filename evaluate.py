@@ -225,6 +225,8 @@ def evaluate_benchmarks(algos, base_dir, datasets, loss_fn, use_cuda=False):
                 experiment_path = os.path.join(dataset_path_path, experiment_dir)
 
                 print("###########yayyyyy", experiment_path)
+                if experiment_path.split('/')[-1] == 'summary.csv':
+                    continue
 
                 # Iterate over all seed directories in the current experiment directory
                 for seed_dir in get_top_dirs(experiment_path):
@@ -254,9 +256,9 @@ def evaluate_benchmarks(algos, base_dir, datasets, loss_fn, use_cuda=False):
                         df = pd.concat([df, pd.DataFrame([experiment_summary])], ignore_index=True)
 
                 # Save the DataFrame as a CSV file
-                df_dst_path = os.path.join(base_dir, loss_fn_path, dataset_path, experiment_dir, 'summary.csv')
+                df_dst_path = "_".join(base_dir, str(loss_fn_path), dataset_path, experiment_dir, 'summary.csv')
                 print(df)
-                # df.to_csv(df_dst_path, decimal='.', sep=';', float_format='%.5f', index=False)
+                df.to_csv(df_dst_path, decimal='.', sep=';', float_format='%.5f', index=False)
 
 
 if __name__ == '__main__':
