@@ -215,7 +215,7 @@ def evaluate_benchmarks(algos, base_dir, datasets, loss_fn, use_cuda=False):
         for dataset_path in os.listdir(loss_fn_path_path): # numerical_results/1
             dataset_path_path = os.path.join(loss_fn_path_path,str(dataset_path)) # numerical_results/1/STOCKS
             # Skip directories that are not in the specified datasets
-            # if dataset_dir not in datasets:
+            # if dataset_path not in datasets:
             #     continue
 
             # Iterate over all experiments in the current dataset directory
@@ -236,7 +236,7 @@ def evaluate_benchmarks(algos, base_dir, datasets, loss_fn, use_cuda=False):
                         if algo_dir not in algos:
                             continue
 
-                        print(dataset_dir, experiment_dir, algo_dir)
+                        print(dataset_path, experiment_dir, algo_dir)
                         algo_path = os.path.join(seed_path, algo_dir)
 
                         # Evaluate the generator for the current algorithm and seed
@@ -244,17 +244,17 @@ def evaluate_benchmarks(algos, base_dir, datasets, loss_fn, use_cuda=False):
                             model_name=algo_dir,
                             seed=seed_dir.split('_')[-1],
                             experiment_dir=algo_path,
-                            dataset=dataset_dir,
+                            dataset=dataset_path,
                             use_cuda=use_cuda
                         )
                         # Add relevant parameters used during training to the experiment summary
-                        experiment_summary = complete_experiment_summary(dataset_dir, experiment_dir, experiment_summary)
+                        experiment_summary = complete_experiment_summary(dataset_path, experiment_dir, experiment_summary)
 
                         # Add the experiment summary to the DataFrame
                         df = pd.concat([df, pd.DataFrame([experiment_summary])], ignore_index=True)
 
                 # Save the DataFrame as a CSV file
-                df_dst_path = os.path.join(base_dir, dataset_dir, experiment_dir, 'summary.csv')
+                df_dst_path = os.path.join(base_dir, dataset_path, experiment_dir, 'summary.csv')
                 df.to_csv(df_dst_path, decimal='.', sep=';', float_format='%.5f', index=False)
 
 
