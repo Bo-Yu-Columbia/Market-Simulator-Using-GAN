@@ -75,7 +75,7 @@ def get_algo(algo_id, base_config, dataset, data_params, x_real, loss_fn):
     return algo
 
 
-def run(algo_id, base_config, base_dir, dataset, spec, result_dir, data_params={}, loss_fn):
+def run(algo_id, base_config, base_dir, dataset, spec, result_dir, loss_fn, data_params={}):
     """ 
     Main function that runs the algorithm on the dataset and saves the results.
     
