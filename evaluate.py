@@ -70,7 +70,7 @@ def get_algo_config(dataset, experiment_dir):
     if dataset == 'VAR':
         key += experiment_dir.split('/')[3][4]
     elif dataset == 'STOCKS':
-        key += '_' + experiment_dir.split('/')[3]
+        key += '_' + experiment_dir.split('/')[4]
     elif dataset == 'YIELD':
         key += '_' + experiment_dir.split('/')[3]
 
