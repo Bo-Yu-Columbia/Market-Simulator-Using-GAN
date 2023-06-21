@@ -150,28 +150,28 @@ class SigCWGAN(BaseAlgo):
 
         # Generate fake signatures and fake data points using the generator
         sigs_fake_ce, x_fake = sample_sig_fake(self.G, self.q, self.sig_config, x_past)
-        if self.loss_fn = 1:
+        if self.loss_fn == 1:
             loss = sigcwgan_loss(sigs_pred, sigs_fake_ce)
 
-        elif self.loss_fn = 2:
+        elif self.loss_fn == 2:
             loss = sigcwgan_loss_new(sigs_pred, sigs_fake_ce)
 
-        elif self.loss_fn = 3:
+        elif self.loss_fn == 3:
             loss = congan_loss(sigs_pred, sigs_fake_ce)
 
-        elif self.loss_fn = 4:
+        elif self.loss_fn == 4:
             loss = hinge_gan_loss(sigs_pred, sigs_fake_ce)
 
-        elif self.loss_fn = 5:
+        elif self.loss_fn == 5:
             loss = self.mse_loss(sigs_pred, sigs_fake_ce)
 
-        elif self.loss_fn = 6:
+        elif self.loss_fn == 6:
             loss = self.mae_loss(sigs_pred, sigs_fake_ce)
 
-        elif self.loss_fn = 7:
+        elif self.loss_fn == 7:
             loss = self.kld_loss(sigs_pred, sigs_fake_ce)
 
-        elif self.loss_fn = 8:
+        elif self.loss_fn == 8:
             loss = self.bce_loss(sigs_pred, sigs_fake_ce)
         # Compute the loss between the real and fake signatures
         # loss = sigcwgan_loss(sigs_pred, sigs_fake_ce)
