@@ -88,7 +88,7 @@ def run(algo_id, base_config, base_dir, dataset, spec, result_dir, loss_fn, data
     data_params: The parameters of the dataset.
     """
     print('Executing: %s, %s, %s' % (algo_id, dataset, spec))
-    experiment_directory = pt.join(base_dir,str(loss_fn), dataset, result_dir, spec, 'seed={}'.format(base_config.seed), algo_id)
+    experiment_directory = pt.join(base_dir,str(loss_fn), dataset, spec, 'seed={}'.format(base_config.seed), algo_id)
     if not pt.exists(experiment_directory):
         os.makedirs(experiment_directory)
     set_seed(base_config.seed)
