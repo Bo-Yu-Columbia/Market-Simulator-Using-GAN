@@ -265,4 +265,5 @@ if __name__ == '__main__':
     parser.add_argument('-algos', default=['SigCWGAN', 'GMMN'], nargs="+")
     parser.add_argument('-loss_fn', default=1, type=int)
     args = parser.parse_args()
-    evaluate_benchmarks(base_dir=args.base_dir, use_cuda=args.use_cuda, datasets=args.datasets, algos=args.algos, loss_fn = args.loss_fn
+    print("Evaluating on loss fn: ", args.loss_fn)
+    evaluate_benchmarks(base_dir=args.base_dir, use_cuda=args.use_cuda, datasets=args.datasets, algos=args.algos, loss_fn = args.loss_fn)
