@@ -38,6 +38,13 @@ def congan_loss(D_real: torch.Tensor, D_fake: torch.Tensor):
     loss = -loss_real - loss_fake
     return loss
 
+def hinge_gan_loss(D_real: torch.Tensor, D_fake: torch.Tensor):
+    # Calculate the hinge GAN loss
+    loss_real = torch.mean(torch.nn.ReLU()(1 - D_real))
+    loss_fake = torch.mean(torch.nn.ReLU()(1 + D_fake))
+    loss = loss_real + loss_fake
+    return loss
+
 
 
 
@@ -128,8 +135,9 @@ class SigCWGAN(BaseAlgo):
 
         # Compute the loss between the real and fake signatures
         # loss = sigcwgan_loss(sigs_pred, sigs_fake_ce)
-        loss = sigcwgan_loss_new(sigs_pred, sigs_fake_ce)
+        # loss = sigcwgan_loss_new(sigs_pred, sigs_fake_ce)
         # loss = congan_loss(sigs_pred, sigs_fake_ce)
+        loss = hinge_gan_loss(sigs_pred, sigs_fake_ce)
 
         loss.backward()  # Compute the gradients by backpropagation
 
