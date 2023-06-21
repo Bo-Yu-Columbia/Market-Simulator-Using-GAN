@@ -10,7 +10,7 @@ for p in "${p_range[@]}"; do
     for q in "${q_range[@]}"; do
         for dims in "${dims_range[@]}"; do
             echo "Executing training command with p=$p, q=$q, hidden_dims=$dims"
-            python train.py -use_cuda -total_steps 1 -p $p -q $q -hidden_dims $dims -datasets 'STOCKS' -'SigCWGAN' 'GMMN'
+            python train.py -use_cuda -total_steps 1 -p $p -q $q -hidden_dims $dims -datasets 'STOCKS' -algo 'SigCWGAN' 'GMMN'
         done
     done
 done
