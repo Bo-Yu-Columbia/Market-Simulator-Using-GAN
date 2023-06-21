@@ -88,7 +88,7 @@ def run(algo_id, base_config, base_dir, dataset, spec, result_dir, data_params={
     data_params: The parameters of the dataset.
     """
     print('Executing: %s, %s, %s' % (algo_id, dataset, spec))
-    experiment_directory = pt.join(base_dir, dataset, spec, 'seed={}'.format(base_config.seed), algo_id, result_dir)
+    experiment_directory = pt.join(base_dir, dataset, result_dir, spec, 'seed={}'.format(base_config.seed), algo_id)
     if not pt.exists(experiment_directory):
         os.makedirs(experiment_directory)
     set_seed(base_config.seed)
@@ -177,7 +177,7 @@ def name_train_script_result_dir(p, q, hidden_dims):
     Returns:
     A string representing the directory name.
     """
-    return 'p={}_q={}_hidden_dims={}'.format(str(p), str(q), str(d))
+    return 'p={}_q={}_hidden_dims={}'.format(str(p), str(q), str(hidden_dims))
 
 def main(args):
     """
