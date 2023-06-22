@@ -272,7 +272,7 @@ if __name__ == '__main__':
     parser.add_argument('-base_dir', default='./numerical_results', type=str)
     parser.add_argument('-use_cuda', action='store_true')
     parser.add_argument('-datasets', default=['STOCKS'], nargs="+")
-    parser.add_argument('-algos', default=['SigCWGAN', 'GMMN'], nargs="+")
+    parser.add_argument('-algos', default=['SigCWGAN', 'GMMN', 'RCGAN', 'TimeGAN', 'RCWGAN',], nargs="+")
     parser.add_argument('-loss_fn', default=1, type=int)
     args = parser.parse_args()
     print("Evaluating on loss fn: ", args.loss_fn)
