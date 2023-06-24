@@ -176,12 +176,12 @@ def create_summary(dataset, device, G, lags_past, steps, x_real, one=False):
 
     # Convert x_fake and x_real to pandas DataFrames
     df_fake = pd.DataFrame(x_fake_future1)
-    #df_real = pd.DataFrame(x_real)
+    df_real = pd.DataFrame(x_real)
     
     # Save DataFrames to Excel file
     save_path = '/home/tg2885/project_of_EIB'
     df_fake.to_excel(f'{save_path}/x_fake_data.xlsx', index=False)
-    #df_real.to_excel(f'{save_path}/x_real_data.xlsx', index=False)
+    df_real.to_excel(f'{save_path}/x_real_data.xlsx', index=False)
 
 
     return x_fake_future
