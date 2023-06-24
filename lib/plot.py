@@ -169,8 +169,9 @@ def create_summary(dataset, device, G, lags_past, steps, x_real, one=False):
     import numpy as np
 
     # Reshape x_fake_future to remove the extra dimension
-    #x_fake_future = x_fake_future.cpu().numpy()
-    
+    x_fake_future = x_fake_future.cpu().numpy()
+    x_real = x_real.cpu().numpy()
+
     # Convert x_fake and x_real to pandas DataFrames
     df_fake = pd.DataFrame(x_fake_future)
     df_real = pd.DataFrame(x_real)
