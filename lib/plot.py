@@ -179,7 +179,7 @@ def create_summary(dataset, device, G, lags_past, steps, x_real, one=False):
     #df_real = pd.DataFrame(x_real)
     
     # Save DataFrames to Excel file
-    save_path = '/Users/tunahangumuskaya/Desktop/Classes/EOR4721_AI_Applications_in_Finance/EIB Summer 2023/some_results'
+    save_path = '/Users/tunahangumuskaya/Desktop/Classes/EOR4721_AI_Applications_in_Finance/EIBSummer2023/some_results'
     df_fake.to_excel(f'{save_path}/x_fake_data.xlsx', index=False)
     #df_real.to_excel(f'{save_path}/x_real_data.xlsx', index=False)
 
