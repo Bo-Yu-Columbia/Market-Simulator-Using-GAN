@@ -169,11 +169,11 @@ def create_summary(dataset, device, G, lags_past, steps, x_real, one=False):
     import numpy as np
 
     # Reshape x_fake_future to remove the extra dimension
-    x_fake_future = x_fake_future.squeeze(2).cpu().numpy()
+    x_fake_future = x_fake_future.cpu().numpy()
     
     # Convert x_fake and x_real to pandas DataFrames
-    df_fake = pd.DataFrame(np.reshape(x_fake_future, (x_fake_future.shape[0], -1)))
-    df_real = pd.DataFrame(x_real.squeeze().cpu().numpy())
+    df_fake = pd.DataFrame(x_fake_future)
+    df_real = pd.DataFrame(x_real.cpu().numpy())
     
     # Save DataFrames to Excel file
     save_path = '/Users/tunahangumuskaya/Desktop/Classes/EOR4721_AI_Applications_in_Finance/EIB Summer 2023/some_results'
