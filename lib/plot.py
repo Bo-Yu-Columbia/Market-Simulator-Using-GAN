@@ -164,10 +164,15 @@ def create_summary(dataset, device, G, lags_past, steps, x_real, one=False):
             x_p = x_p[:1]
         x_fake_future = G.sample(steps, x_p.to(device))
         plot_summary(x_fake=x_fake_future, x_real=x_real, max_lag=3)
-        
+
     import pandas as pd
+    import numpy as np
+
+    # Reshape x_fake_future to remove the extra dimension
+    x_fake_future = x_fake_future.squeeze().cpu().numpy()
+    
     # Convert x_fake and x_real to pandas DataFrames
-    df_fake = pd.DataFrame(x_fake_future.squeeze().cpu().numpy())
+    df_fake = pd.DataFrame(np.reshape(x_fake_future, (x_fake_future.shape[0], -1)))
     df_real = pd.DataFrame(x_real.squeeze().cpu().numpy())
     
     # Save DataFrames to Excel file
