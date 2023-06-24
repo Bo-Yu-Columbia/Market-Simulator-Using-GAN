@@ -171,8 +171,12 @@ def create_summary(dataset, device, G, lags_past, steps, x_real, one=False):
     # Move x_fake_future tensor to CPU
     x_fake_future1 = x_fake_future.cpu().numpy()
     x_real = x_real.cpu().numpy()
+
     # Reshape x_fake_future to remove the extra dimensions
     x_fake_future1 = x_fake_future1.reshape(x_fake_future.shape[0], -1)
+
+    # Reshape x_real to remove the extra dimensions
+    x_real = x_real.reshape(x_real.shape[0], -1)
 
     # Convert x_fake and x_real to pandas DataFrames
     df_fake = pd.DataFrame(x_fake_future1)
