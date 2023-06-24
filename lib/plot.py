@@ -164,4 +164,16 @@ def create_summary(dataset, device, G, lags_past, steps, x_real, one=False):
             x_p = x_p[:1]
         x_fake_future = G.sample(steps, x_p.to(device))
         plot_summary(x_fake=x_fake_future, x_real=x_real, max_lag=3)
+        
+    import pandas as pd
+    # Convert x_fake and x_real to pandas DataFrames
+    df_fake = pd.DataFrame(x_fake_future.squeeze().cpu().numpy())
+    df_real = pd.DataFrame(x_real.squeeze().cpu().numpy())
+    
+    # Save DataFrames to Excel file
+    save_path = '/Users/tunahangumuskaya/Desktop/Classes/EOR4721_AI_Applications_in_Finance/EIB Summer 2023/some_results'
+    df_fake.to_excel(f'{save_path}/x_fake_data.xlsx', index=False)
+    df_real.to_excel(f'{save_path}/x_real_data.xlsx', index=False)
+
+
     return x_fake_future
