@@ -175,6 +175,9 @@ def create_summary(dataset, device, G, lags_past, steps, x_real, one=False):
     # Reshape x_fake_future to remove the extra dimensions
     x_fake_future1 = x_fake_future1.reshape(x_fake_future.shape[0], -1)
 
+    # Reshape x_fake_future to remove the extra dimensions and transpose
+    x_fake_future1 = np.transpose(x_fake_future1, (1, 0)).reshape(-1, 1)
+
     # Reshape x_real to remove the extra dimensions
     x_real = x_real.reshape(x_real.shape[0], -1)
 
@@ -184,8 +187,8 @@ def create_summary(dataset, device, G, lags_past, steps, x_real, one=False):
     
     # Save DataFrames to Excel file
     save_path = '/home/tg2885/project_of_EIB'
-    df_fake.to_csv(f'{save_path}/x_fake_data.csv', index=False)
-    df_real.to_csv(f'{save_path}/x_real_data.csv', index=False)
+    df_fake.to_excel(f'{save_path}/x_fake_data.xlsx', index=False)
+    df_real.to_excel(f'{save_path}/x_real_data.xlsx', index=False)
 
 
     return x_fake_future
