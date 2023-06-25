@@ -119,6 +119,7 @@ def run(algo_id, base_config, base_dir, dataset, spec, result_dir, loss_fn, data
 
     # Save the real path, generator weights, and training loss for further analysis
     pickle_it(x_real, pt.join(pt.dirname(experiment_directory), 'x_real.torch'))
+    pickle_it(x_real, pt.join(pt.dirname(experiment_directory), 'x_real1.xlsx'))
     pickle_it(algo.training_loss, pt.join(experiment_directory, 'training_loss.pkl'))
     pickle_it(algo.G.to('cpu').state_dict(), pt.join(experiment_directory, 'G_weights.torch'))
 
