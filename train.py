@@ -119,7 +119,6 @@ def run(algo_id, base_config, base_dir, dataset, spec, result_dir, loss_fn, data
 
     # Save the real path, generator weights, and training loss for further analysis
     pickle_it(x_real, pt.join(pt.dirname(experiment_directory), 'x_real.torch'))
-    
     pickle_it(algo.training_loss, pt.join(experiment_directory, 'training_loss.pkl'))
     pickle_it(algo.G.to('cpu').state_dict(), pt.join(experiment_directory, 'G_weights.torch'))
 
@@ -141,7 +140,7 @@ def get_dataset_configuration(dataset):
     if dataset == 'ECG':
         generator = [('id=100', dict(filenames=['100']))]
     elif dataset == 'STOCKS':
-        generator = (('_'.join(asset), dict(assets=asset)) for asset in [('SPX',), ('SPX', 'DJI')])
+        generator = (('_'.join(asset), dict(assets=asset)) for asset in [('SPX',)])
     elif dataset == 'YIELD':
         generator = (('_'.join(duration), dict(durations=duration)) for duration in [('1Yr',), ('1Yr', '3Yr') , ('1Yr', '3Yr', '10Yr')])
     elif dataset == 'EXCHANGE':
