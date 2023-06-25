@@ -187,8 +187,8 @@ def create_summary(dataset, device, G, lags_past, steps, x_real, one=False):
     
     # Save DataFrames to Excel file
     save_path = '/home/tg2885/project_of_EIB'
-    df_fake.to_excel(f'{save_path}/x_fake_data.xlsx', index=False)
-    df_real.to_excel(f'{save_path}/x_real_data.xlsx', index=False)
+    df_fake.to_excel(f'{save_path}/spx_only_fake_data.xlsx', index=False)
+    df_real.to_excel(f'{save_path}/spx_only_real_data.xlsx', index=False)
 
 
     return x_fake_future
