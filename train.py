@@ -37,6 +37,8 @@ def get_algo_config(dataset, data_params):
         key += '_' + '_'.join(data_params['assets'])
     elif dataset == 'YIELD':
         key += '_' + '_'.join(data_params['durations'])
+    elif dataset == 'EIB':
+        key += '_' + '_'.join(data_params['durations'])
     elif dataset == 'EXCHANGE':
         key += '_' + '_'.join(data_params['exchanges'])
     return SIGCWGAN_CONFIGS[key]
