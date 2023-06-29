@@ -134,10 +134,10 @@ class SigCWGAN(BaseAlgo):
         sigs_fake_ce, x_fake = sample_sig_fake(self.G, self.q, self.sig_config, x_past)
 
         # Compute the loss between the real and fake signatures
-        # loss = sigcwgan_loss(sigs_pred, sigs_fake_ce)
+        loss = sigcwgan_loss(sigs_pred, sigs_fake_ce)
         # loss = sigcwgan_loss_new(sigs_pred, sigs_fake_ce)
         # loss = congan_loss(sigs_pred, sigs_fake_ce)
-        loss = hinge_gan_loss(sigs_pred, sigs_fake_ce)
+        # loss = hinge_gan_loss(sigs_pred, sigs_fake_ce)
 
         loss.backward()  # Compute the gradients by backpropagation
 

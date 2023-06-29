@@ -106,7 +106,63 @@ def get_yield_dataset(durations, with_vol=False):
     data_preprocessed = pipeline.transform(data_raw)
     return pipeline, data_raw, data_preprocessed
 
+def get_eib_dataset(durations, with_vol=False):
+    """
+    Get different returns series.
+    """
+    # yield_1yr = pd.read_csv('./data/eib_data/daily_yield_transformed_all.csv')
+    # yield_5yr = pd.read_csv('./data/eib_data/daily_yield_transformed_all_10yr.csv')
+    # start = '01/03/2017'
+    # end = '11/16/2022'
+    lam = 0.94
+    df_yield = {}
+    rtn = {}
 
+    for y in durations:
+        # df_yield[y] = yield_[yield_['Symbol'] == y].drop(['Unnamed: 0'], axis=1).set_index(['Date'])[start:end]
+        df_yield[y] = pd.read_csv('../../data/EIB/ECB_' + y + '.csv')
+        print(df_yield[y])
+        rtn[y] = df_yield[y].iloc[:, 2].to_numpy(dtype='float32').reshape(1, -1, 1)
+        print(rtn[y])
+    #
+    #     volume = {}
+    #
+    # for y in durations:
+    #     rtn[y] = df_yield[y].iloc[:, 1].to_numpy(dtype='float32').reshape(1, -1, 1)
+    #         volume[y] = df_yield[y][['volume']].to_numpy(dtype='float32').reshape(1, -1, 1)
+
+    if not with_vol:  # simulate from EWMA model
+        prep_concatenate = []
+        vol = {}
+        for y in durations:
+            var = np.zeros(len(df_yield[y]))
+            ret = rtn[y].reshape(-1, 1)
+            for t in range(1, len(df_yield[y])):
+                var[t] = lam * var[t - 1] + (1 - lam) * np.power(ret[t][0], 2)
+            vol[y] = var.reshape(1, -1, 1)
+
+        for y in durations:
+            prep_concatenate.append(rtn[y])
+            prep_concatenate.append(vol[y])
+        data_raw = np.concatenate(prep_concatenate, axis=-1)
+
+    else:
+        vol = {}
+        for y in durations:
+            vol[y] = df_yield[y][['medrv']].values[-rtn[y].shape[1]:].reshape(1, -1, 1)
+
+        prep_concatenate = []
+        for y in durations:
+            prep_concatenate.append(rtn[y])
+            prep_concatenate.append(vol[y])
+            prep_concatenate.append(volume[y])
+
+        data_raw = np.concatenate(prep_concatenate, axis=-1)
+
+    data_raw = torch.from_numpy(data_raw).float()
+    pipeline = Pipeline(steps=[('standard_scale', StandardScalerTS(axis=(0, 1)))])
+    data_preprocessed = pipeline.transform(data_raw)
+    return pipeline, data_raw, data_preprocessed
 
 def get_equities_dataset(assets=('SPX', 'DJI'), with_vol=True):
     """
@@ -308,6 +364,8 @@ def get_data(data_type, p, q, **data_params):
         )
     elif data_type == 'ECG':
         pipeline, x_real_raw, x_real = get_mit_arrythmia_dataset(**data_params)
+    elif data_type == 'EIB':
+        pipeline, x_real_raw, x_real = get_eib_dataset(**data_params, with_vol=False)
     else:
         raise NotImplementedError('Dataset %s not valid' % data_type)
     assert x_real.shape[0] == 1
