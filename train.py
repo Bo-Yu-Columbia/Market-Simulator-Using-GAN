@@ -250,7 +250,7 @@ if __name__ == '__main__':
 
     # The datasets and algos can be rearranged so that the order at which datasets are trained could be different
     # Also, if you are interested in learning about one dataset, you can can just set the default to be that one dataset
-    parser.add_argument('-datasets', default=['YIELD', 'EXCHANGE', 'ECG', 'ARCH', 'STOCKS', 'VAR', ], nargs="+")
+    parser.add_argument('-datasets', default=['YIELD', 'EXCHANGE', 'ECG', 'ARCH', 'STOCKS', 'VAR', 'EIB' ], nargs="+")
     parser.add_argument('-algos', default=['SigCWGAN', 'GMMN', 'RCGAN', 'TimeGAN', 'RCWGAN', ], nargs="+")
 
     # Algo hyperparameters - you can change these and may achieve better result
