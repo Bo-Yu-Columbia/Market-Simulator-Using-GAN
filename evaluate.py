@@ -251,7 +251,11 @@ def evaluate_benchmarks(algos, base_dir, datasets, use_cuda=False):
                     df = pd.concat([df, pd.DataFrame([experiment_summary])], ignore_index=True)
                     
             # Save the DataFrame as a CSV file
+            print("Summary of experiment: ")
+            print(df)
+
             df_dst_path = os.path.join(base_dir, dataset_dir, experiment_dir, 'summary.csv')
+            print(df_dst_path)
             df.to_csv(df_dst_path, decimal=',', sep=';', float_format='%.5f', index=False)
 
 
