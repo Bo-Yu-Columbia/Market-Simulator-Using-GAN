@@ -110,7 +110,9 @@ def evaluate_generator(model_name, seed, experiment_dir, dataset, use_cuda=True)
     # Load and prepare real path.
     # ----------------------------------------------
     x_real = load_pickle(os.path.join(os.path.dirname(experiment_dir), 'x_real.torch')).to(device)
+    print("experiment_dir:", experiment_dir)
     x_past, x_future = x_real[:, :p], x_real[:, p:p + q]
+    print("x_past.shape:", x_past.shape)
     x_future = x_real[:, p:p + q]
     dim = x_real.shape[-1]
     # ----------------------------------------------
@@ -156,7 +158,7 @@ def evaluate_generator(model_name, seed, experiment_dir, dataset, use_cuda=True)
     # Create the relevant summary plots.
     # ----------------------------------------------
     with torch.no_grad():
-        _x_past = x_past.clone().repeat(5, 1, 1) if dataset in ['STOCKS', 'ECG', 'YIELD', 'EXCHANGE'] else x_past.clone()
+        _x_past = x_past.clone().repeat(5, 1, 1) if dataset in ['STOCKS', 'ECG', 'YIELD', 'EXCHANGE', 'EIB'] else x_past.clone()
         x_fake_future = G.sample(q, _x_past)
         plot_summary(x_fake=x_fake_future, x_real=x_real, max_lag=q)
     plt.savefig(os.path.join(experiment_dir, 'summary.png'))
@@ -193,6 +195,8 @@ def complete_experiment_summary(benchmark_directory, experiment_directory, exper
         experiment_summary['durations'] = experiment_directory
     elif benchmark_directory == 'EXCHANGE':
         experiment_summary['exchanges'] = experiment_directory
+    elif benchmark_directory == 'EIB':
+        experiment_summary['durations'] = experiment_directory
     return experiment_summary
 
 
