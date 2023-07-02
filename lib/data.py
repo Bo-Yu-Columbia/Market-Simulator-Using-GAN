@@ -57,12 +57,16 @@ def get_yield_dataset(durations, with_vol=False):
     end = '11/16/2022'
     lam = 0.94
     df_yield = {}
-    
+
+
+
     for y in durations:
 #         print("#############")
 #         print(y)
 #         print("#############")
         df_yield[y] = yield_[yield_['Symbol'] == y].drop(['Unnamed: 0'], axis=1).set_index(['Date'])[start:end]
+        df_yield[y]['close_price'] = df_yield[y]['close_price'].diff()
+        df_yield[y] = df_yield[y][1:]
 #         print(df_yield[y])
 #         print("#############")
         
