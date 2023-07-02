@@ -85,7 +85,7 @@ def run(algo_id, base_config, base_dir, dataset, spec, result_dir, loss_fn, data
     base_dir: The base directory to save the results.
     dataset: The dataset used for the experiment.
     spec: Specification parameters.
-    data_params: The parameters of the dataset.
+    data_params: The paramters of the dataset.
     """
     print('Executing: %s, %s, %s' % (algo_id, dataset, spec))
     experiment_directory = pt.join(base_dir,str(loss_fn), dataset, spec, 'seed={}'.format(base_config.seed), algo_id)
@@ -142,7 +142,9 @@ def get_dataset_configuration(dataset):
     elif dataset == 'STOCKS':
         generator = (('_'.join(asset), dict(assets=asset)) for asset in [('SPX',)])
     elif dataset == 'YIELD':
-        generator = (('_'.join(duration), dict(durations=duration)) for duration in [('1Yr',), ('1Yr', '3Yr') , ('1Yr', '3Yr', '10Yr')])
+        #generator = (('_'.join(duration), dict(durations=duration)) for duration in [('1Yr',), ('1Yr', '3Yr') , ('1Yr', '3Yr', '10Yr')]) Tunahan changed
+        generator = (('_'.join(duration), dict(durations=duration)) for duration in [('1Yr',)])
+
     elif dataset == 'EXCHANGE':
         generator = (('_'.join(exchange), dict(exchanges=exchange)) for exchange in [('JPYUSD',), ('JPYUSD', 'EURUSD')])
     elif dataset == 'VAR':
