@@ -219,6 +219,7 @@ def evaluate_benchmarks(algos, base_dir, datasets, use_cuda=False):
         
         # Skip directories that are not in the specified datasets
         if dataset_dir not in datasets:
+            print('Skipping dataset: {}'.format(dataset_dir)
             continue
             
         # Iterate over all experiments in the current dataset directory
@@ -269,7 +270,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Turn cuda off / on during evalution.')
     parser.add_argument('-base_dir', default='./numerical_results', type=str)
     parser.add_argument('-use_cuda', action='store_true')
-    parser.add_argument('-datasets', default=['YIELD', 'EXCHANGE', 'ECG', 'ARCH', 'STOCKS', 'VAR','EIB' ], nargs="+")
+    parser.add_argument('-datasets', default=['YIELD', 'EXCHANGE', 'ECG', 'ARCH', 'STOCKS', 'VAR', 'EIB' ], nargs="+")
     parser.add_argument('-algos', default=['SigCWGAN', 'GMMN', 'RCGAN', 'TimeGAN', 'RCWGAN', ], nargs="+")
     args = parser.parse_args()
     evaluate_benchmarks(base_dir=args.base_dir, use_cuda=args.use_cuda, datasets=args.datasets, algos=args.algos)
