@@ -142,7 +142,7 @@ def get_dataset_configuration(dataset):
     elif dataset == 'STOCKS':
         generator = (('_'.join(asset), dict(assets=asset)) for asset in [('SPX',)])
     elif dataset == 'YIELD':
-        generator = (('_'.join(duration), dict(durations=duration)) for duration in [('1Yr',), ('1Yr', '3Yr') , ('1Yr', '3Yr', '10Yr')]) Tunahan changed
+        generator = (('_'.join(duration), dict(durations=duration)) for duration in [('1Yr',), ('1Yr', '3Yr') , ('1Yr', '3Yr', '10Yr')])
         #generator = (('_'.join(duration), dict(durations=duration)) for duration in [('1Yr', '5Yr', '10Yr', '20Yr', '30Yr')])
 
     elif dataset == 'EXCHANGE':
