@@ -227,19 +227,23 @@ def evaluate_benchmarks(algos, base_dir, datasets, use_cuda=False):
             # Initialize an empty DataFrame to store the summary of all experiments
             df = pd.DataFrame(columns=[])
             experiment_path = os.path.join(dataset_path, experiment_dir)
+            print('Evaluating experiment: {}'.format(experiment_path))
             
             # Iterate over all seed directories in the current experiment directory
             for seed_dir in get_top_dirs(experiment_path):
                 seed_path = os.path.join(experiment_path, seed_dir)
+                print('Evaluating seed: {}'.format(seed_path))
                 
                 # Iterate over all algorithm directories in the current seed directory
                 for algo_dir in get_top_dirs(seed_path):
                     # Skip directories that are not in the specified algorithms
                     if algo_dir not in algos:
+                        print('Skipping algorithm: {}'.format(algo_dir))
                         continue
                         
                     print(dataset_dir, experiment_dir, algo_dir)
                     algo_path = os.path.join(seed_path, algo_dir)
+                    print('Evaluating algorithm: {}'.format(algo_path))
                     
                     # Evaluate the generator for the current algorithm and seed
                     experiment_summary = evaluate_generator(
