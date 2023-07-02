@@ -219,7 +219,7 @@ def evaluate_benchmarks(algos, base_dir, datasets, use_cuda=False):
         
         # Skip directories that are not in the specified datasets
         if dataset_dir not in datasets:
-            print('Skipping dataset: {}'.format(dataset_dir)
+            print('Skipping dataset: {}'.format(dataset_dir))
             continue
             
         # Iterate over all experiments in the current dataset directory
