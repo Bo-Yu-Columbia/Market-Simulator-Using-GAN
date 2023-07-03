@@ -110,11 +110,11 @@ def run(algo_id, base_config, base_dir, dataset, spec, result_dir, loss_fn, data
     savefig('summary.png', experiment_directory)
 
     # Create a long summary and save it as well
-    x_fake = create_summary(dataset, base_config.device, algo.G, base_config.p, 8000, x_real, one=True)
+    x_fake = create_summary(dataset, base_config.device, algo.G, base_config.p, 1464, x_real, one=True)
     savefig('summary_long.png', experiment_directory)
 
     # Plot the first 2000 elements of the fake data and save the plot
-    plt.plot(x_fake.cpu().numpy()[0, :2000])
+    plt.plot(x_fake.cpu().numpy()[0, :1460])
     savefig('long_path.png', experiment_directory)
 
     # Save the real path, generator weights, and training loss for further analysis
