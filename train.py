@@ -143,7 +143,7 @@ def get_dataset_configuration(dataset):
         generator = (('_'.join(asset), dict(assets=asset)) for asset in [('SPX',)])
     elif dataset == 'YIELD':
         #generator = (('_'.join(duration), dict(durations=duration)) for duration in [('1Yr',), ('1Yr', '3Yr') , ('1Yr', '3Yr', '10Yr')])
-        generator = (('_'.join(duration), dict(durations=duration)) for duration in [('1Yr')])
+        generator = (('_'.join(duration), dict(durations=duration)) for duration in ['1Yr'])
 
     elif dataset == 'EXCHANGE':
         generator = (('_'.join(exchange), dict(exchanges=exchange)) for exchange in [('JPYUSD',), ('JPYUSD', 'EURUSD')])
