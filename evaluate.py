@@ -245,7 +245,7 @@ def evaluate_benchmarks(algos, base_dir, datasets, use_cuda=False):
                             continue
                         print("Evaluating algorithm: " + algo_dir)
                         print(dataset_dir, experiment_dir, algo_dir)
-                        algo_path = os.path.join(seed_path, algo_dir)
+                        algo_path = os.path.join(param_path, algo_dir)
 
                         # Evaluate the generator for the current algorithm and seed
                         experiment_summary = evaluate_generator(
