@@ -73,6 +73,8 @@ def get_algo_config(dataset, experiment_dir):
         key += '_' + experiment_dir.split('/')[3]
     elif dataset == 'YIELD':
         key += '_' + experiment_dir.split('/')[3]
+    elif dataset == 'EIB':
+        key += '_' + experiment_dir.split('/')[4]
 
     elif dataset == 'EXCHANGE':
         key += '_' + experiment_dir.split('/')[3]
