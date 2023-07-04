@@ -233,7 +233,8 @@ def evaluate_benchmarks(algos, base_dir, datasets, use_cuda=False):
             for seed_dir in get_top_dirs(experiment_path):
                 seed_path = os.path.join(experiment_path, seed_dir)
                 print('Evaluating seed: {}'.format(seed_path))
-                for param_path in get_top_dirs(seed_path):
+                for param_ls in get_top_dirs(seed_path):
+                    param_path = os.path.join(seed_path, param_ls)
                     # Iterate over all algorithm directories in the current seed directory
                     for algo_dir in get_top_dirs(param_path):
                         # Skip directories that are not in the specified algorithms
