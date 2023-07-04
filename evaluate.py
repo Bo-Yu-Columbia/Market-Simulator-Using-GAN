@@ -233,32 +233,31 @@ def evaluate_benchmarks(algos, base_dir, datasets, use_cuda=False):
             for seed_dir in get_top_dirs(experiment_path):
                 seed_path = os.path.join(experiment_path, seed_dir)
                 print('Evaluating seed: {}'.format(seed_path))
-                
-                # Iterate over all algorithm directories in the current seed directory
-                for algo_dir in get_top_dirs(seed_path):
-                    # Skip directories that are not in the specified algorithms
-                    if algo_dir not in algos:
-                        print('Skipping algorithm: {}'.format(algo_dir))
-                        continue
-                        
-                    print(dataset_dir, experiment_dir, algo_dir)
-                    algo_path = os.path.join(seed_path, algo_dir)
-                    print('Evaluating algorithm: {}'.format(algo_path))
-                    
-                    # Evaluate the generator for the current algorithm and seed
-                    experiment_summary = evaluate_generator(
-                        model_name=algo_dir,
-                        seed=seed_dir.split('_')[-1],
-                        experiment_dir=algo_path,
-                        dataset=dataset_dir,
-                        use_cuda=use_cuda
-                    )
-                    # Add relevant parameters used during training to the experiment summary
-                    experiment_summary = complete_experiment_summary(dataset_dir, experiment_dir, experiment_summary)
-                    
-                    # Add the experiment summary to the DataFrame
-                    df = pd.concat([df, pd.DataFrame([experiment_summary])], ignore_index=True)
-                    
+                for param_path in get_top_dirs(seed_path):
+                    # Iterate over all algorithm directories in the current seed directory
+                    for algo_dir in get_top_dirs(param_path):
+                        # Skip directories that are not in the specified algorithms
+                        if algo_dir not in algos:
+                            print('Skipping algorithm: {}'.format(algo_dir))
+                            continue
+                        print("Evaluating algorithm: " + algo_dir")
+                        print(dataset_dir, experiment_dir, algo_dir)
+                        algo_path = os.path.join(seed_path, algo_dir)
+
+                        # Evaluate the generator for the current algorithm and seed
+                        experiment_summary = evaluate_generator(
+                            model_name=algo_dir,
+                            seed=seed_dir.split('_')[-1],
+                            experiment_dir=algo_path,
+                            dataset=dataset_dir,
+                            use_cuda=use_cuda
+                        )
+                        # Add relevant parameters used during training to the experiment summary
+                        experiment_summary = complete_experiment_summary(dataset_dir, experiment_dir, experiment_summary)
+
+                        # Add the experiment summary to the DataFrame
+                        df = pd.concat([df, pd.DataFrame([experiment_summary])], ignore_index=True)
+
             # Save the DataFrame as a CSV file
             print("Summary of experiment: ")
             print(df)
