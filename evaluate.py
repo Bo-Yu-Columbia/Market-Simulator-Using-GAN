@@ -240,7 +240,7 @@ def evaluate_benchmarks(algos, base_dir, datasets, use_cuda=False):
                         if algo_dir not in algos:
                             print('Skipping algorithm: {}'.format(algo_dir))
                             continue
-                        print("Evaluating algorithm: " + algo_dir")
+                        print("Evaluating algorithm: " + algo_dir)
                         print(dataset_dir, experiment_dir, algo_dir)
                         algo_path = os.path.join(seed_path, algo_dir)
 
