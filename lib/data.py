@@ -62,7 +62,10 @@ def get_yield_dataset(durations, with_vol=False):
 #         print("#############")
 #         print(y)
 #         print("#############")
+#         df_yield[y] = yield_[yield_['Symbol'] == y].drop(['Unnamed: 0'], axis=1).set_index(['Date'])[start:end]
         df_yield[y] = yield_[yield_['Symbol'] == y].drop(['Unnamed: 0'], axis=1).set_index(['Date'])[start:end]
+        df_yield[y]['close_price'] = df_yield[y]['close_price'].diff()
+        df_yield[y] = df_yield[y][1:]
 #         print(df_yield[y])
 #         print("#############")
         
@@ -341,7 +344,7 @@ def get_exchange_dataset(exchanges, with_vol=False):
 
 
 def get_data(data_type, p, q, **data_params):
-    # This function loads the specified type of data (either 'VAR', 'STOCKS', 'YIELD', 'EXCHANGE', 'ARCH', or 'ECG'), 
+    # This function loads the specified type of data (either 'VAR', 'STOCKS', 'YIELD', 'EIB', 'EXCHANGE', 'ARCH', or 'ECG'),
     # processes it, and returns the data in a rolling window format.
     if data_type == 'VAR':
         pipeline, x_real_raw, x_real = get_var_dataset(
