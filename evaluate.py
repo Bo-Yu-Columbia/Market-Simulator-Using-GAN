@@ -68,16 +68,16 @@ def get_algo_config(dataset, experiment_dir):
     # If other data sets are used, you need to add additional parsing lines and the configurations in hyperparameters.py
     key = dataset
     if dataset == 'VAR':
-        key += experiment_dir.split('/')[3][4]
+        key += experiment_dir.split('/')[4][5]
     elif dataset == 'STOCKS':
-        key += '_' + experiment_dir.split('/')[3]
+        key += '_' + experiment_dir.split('/')[4]
     elif dataset == 'YIELD':
-        key += '_' + experiment_dir.split('/')[3]
+        key += '_' + experiment_dir.split('/')[4]
     elif dataset == 'EIB':
         key += '_' + experiment_dir.split('/')[4]
 
     elif dataset == 'EXCHANGE':
-        key += '_' + experiment_dir.split('/')[3]
+        key += '_' + experiment_dir.split('/')[4]
 
     sig_config = SIGCWGAN_CONFIGS[key]
     return sig_config
