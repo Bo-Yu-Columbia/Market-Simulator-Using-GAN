@@ -122,10 +122,9 @@ def get_eib_dataset(durations, with_vol=False):
     rtn = {}
 
     for y in durations:
-        # df_yield[y] = yield_[yield_['Symbol'] == y].drop(['Unnamed: 0'], axis=1).set_index(['Date'])[start:end]
         df_yield[y] = pd.read_csv('./data/EIB/ECB_' + y + '.csv')
-        df_yield[y].iloc[:, 2] = df_yield[y].iloc[:, 2].diff()
-        df_yield[y] = df_yield[y][1:]  # use data in "change" instead of "yeild return"
+        #df_yield[y].iloc[:, 2] = df_yield[y].iloc[:, 2].diff()
+        #df_yield[y] = df_yield[y][1:]  # use data in "change" instead of "yeild return"
 
 
         rtn[y] = df_yield[y].iloc[:, 2].to_numpy(dtype='float32').reshape(1, -1, 1)
