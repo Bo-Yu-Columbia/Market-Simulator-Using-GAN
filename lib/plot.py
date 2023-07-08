@@ -150,9 +150,25 @@ def savefig(filename, directory):
     plt.close()
 
 
+# def create_summary(dataset, device, G, lags_past, steps, x_real, one=False):
+#     # Generates a summary plot for a given dataset using a generative model G. The function
+#     # first generates fake data using the model, and then calls plot_summary to create the
+#     # summary plot. The generated fake data is also returned.
+#     with torch.no_grad():
+#         x_past = x_real[:, :lags_past]
+#         if dataset in ['STOCKS', 'ECG']:
+#             x_p = x_past.clone().repeat(5, 1, 1)
+#         else:
+#             x_p = x_past.clone()
+#         if one:
+#             x_p = x_p[:1]
+#         x_fake_future = G.sample(steps, x_p.to(device))
+#         plot_summary(x_fake=x_fake_future, x_real=x_real, max_lag=3)
+#     return x_fake_future
+
 def create_summary(dataset, device, G, lags_past, steps, x_real, one=False):
-    # Generates a summary plot for a given dataset using a generative model G. The function 
-    # first generates fake data using the model, and then calls plot_summary to create the 
+    # Generates a summary plot for a given dataset using a generative model G. The function
+    # first generates fake data using the model, and then calls plot_summary to create the
     # summary plot. The generated fake data is also returned.
     with torch.no_grad():
         x_past = x_real[:, :lags_past]
@@ -164,4 +180,30 @@ def create_summary(dataset, device, G, lags_past, steps, x_real, one=False):
             x_p = x_p[:1]
         x_fake_future = G.sample(steps, x_p.to(device))
         plot_summary(x_fake=x_fake_future, x_real=x_real, max_lag=3)
+
+    import pandas as pd
+    import numpy as np
+
+    # Move x_fake_future tensor to CPU
+    x_fake_future1 = x_fake_future.cpu().numpy()
+    x_real = x_real.cpu().numpy()
+
+    # Reshape x_fake_future to remove the extra dimensions
+    x_fake_future1 = x_fake_future1.reshape(x_fake_future.shape[0], -1)
+
+    # Reshape x_fake_future to remove the extra dimensions and transpose
+    x_fake_future1 = np.transpose(x_fake_future1, (1, 0)).reshape(-1, 1)
+
+    # Reshape x_real to remove the extra dimensions
+    x_real = x_real.reshape(x_real.shape[0], -1)
+
+    # Convert x_fake and x_real to pandas DataFrames
+    df_fake = pd.DataFrame(x_fake_future1)
+    df_real = pd.DataFrame(x_real)
+
+    # Save DataFrames to Excel file
+    save_path = '/home/tg2885/project_of_EIB'
+    df_fake.to_excel(f'{save_path}/1yearyield_only_fake_data.xlsx', index=False)
+    df_real.to_excel(f'{save_path}/1yearyield_only_real_data.xlsx', index=False)
+
     return x_fake_future
