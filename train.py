@@ -112,12 +112,12 @@ def run(algo_id, base_config, base_dir, dataset, spec, result_dir, data_params={
     savefig('summary.png', experiment_directory)
 
     # Create a long summary and save it as well
-    x_fake = create_summary(dataset, base_config.device, algo.G, base_config.p, 8000, x_real, one=True)
-    savefig('summary_long.png', experiment_directory)
+    #x_fake = create_summary(dataset, base_config.device, algo.G, base_config.p, 8000, x_real, one=True)
+    #savefig('summary_long.png', experiment_directory)
 
     # Plot the first 2000 elements of the fake data and save the plot
-    plt.plot(x_fake.cpu().numpy()[0, :2000])
-    savefig('long_path.png', experiment_directory)
+    #plt.plot(x_fake.cpu().numpy()[0, :2000])
+    #savefig('long_path.png', experiment_directory)
 
     # Save the real path, generator weights, and training loss for further analysis
     pickle_it(x_real, pt.join(pt.dirname(experiment_directory), 'x_real.torch'))
@@ -165,7 +165,7 @@ def get_dataset_configuration(dataset):
         generator = [('a', dict())]
     elif dataset == 'EIB':
         generator = (('_'.join(duration), dict(durations=duration))
-                     #for duration in [('1yr',), ('1yr', '5yr')])
+                     #for duration in [('1yr',), ('1yr', '5yr'),('1yr', '5yr','10yr')])
                      for duration in [('1yr',)])
     else:
         # if the dataset is not recognized, it raises an exception
