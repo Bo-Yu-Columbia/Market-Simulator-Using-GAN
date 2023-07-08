@@ -165,7 +165,7 @@ def get_dataset_configuration(dataset):
         generator = [('a', dict())]
     elif dataset == 'EIB':
         generator = (('_'.join(duration), dict(durations=duration))
-                     for duration in [('1yr',), ('1yr', '5yr')])
+                     for duration in [('1yr',)])
                      # for duration in [('1yr',), ('1yr', '5yr'), ('1yr', '5yr', '10yr')])
     else:
         # if the dataset is not recognized, it raises an exception
