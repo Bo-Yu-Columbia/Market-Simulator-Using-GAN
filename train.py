@@ -38,7 +38,7 @@ def get_algo_config(dataset, data_params):
     elif dataset == 'YIELD':
         key += '_' + '_'.join(data_params['durations'])
     elif dataset == 'EIB':
-        key += '_' + '_'.join(data_params['durations'])
+        key += '_' + '_'.join(data_params['durations']) #T key = 'EIB_1yr_5yr_10yr'
     elif dataset == 'EXCHANGE':
         key += '_' + '_'.join(data_params['exchanges'])
     return SIGCWGAN_CONFIGS[key]
@@ -89,18 +89,27 @@ def run(algo_id, base_config, base_dir, dataset, spec, result_dir, data_params={
     spec: Specification parameters.
     data_params: The parameters of the dataset.
     """
+#T    run(
+#T     algo_id=algo_id, #'SigCWGAN'
+#T     base_config=base_config, # device='cuda'| seed=0 | batch_size=200 | hidden_dims=(50,50,50) | p=3 | q=3 | total_steps=1000   
+#T     data_params=data_params, #{'durations': '1yr'}   {'durations': '1yr_5yr'}
+#T     dataset=dataset, #EIB
+#T     base_dir=args.base_dir, #Numerical Results
+#T     spec=spec, # '1yr'     '1yr_5yr'
+#T     result_dir=result_dir,  #return 'p={}_q={}_hidden_dims={}'.format(str(p), str(q), str(hidden_dims))
+#T   )
     print('Executing: %s, %s, %s' % (algo_id, dataset, spec))
     experiment_directory = pt.join(base_dir, dataset, result_dir, spec, 'seed={}'.format(base_config.seed), algo_id)
     if not pt.exists(experiment_directory):
         os.makedirs(experiment_directory)
-    set_seed(base_config.seed)
+    set_seed(base_config.seed) #T seed=0 | Setting the seed allows for reproducibility, meaning that if you run the same code multiple times with the same seed, you will get the same sequence of random numbers each time.
     x_real = get_data(dataset, base_config.p, base_config.q, **data_params)
     x_real = x_real.to(base_config.device)
     ind_train = int(x_real.shape[0] * 0.8)
     x_real_train, x_real_test = x_real[:ind_train], x_real[ind_train:]
 
     # Initialize the chosen algorithm with the real data and the configurations
-    algo = get_algo(algo_id, base_config, dataset, data_params, x_real)
+    algo = get_algo(algo_id, base_config, dataset, data_params, x_real)  #Tunahan TODO left here
 
     # Train the algorithm
     algo.fit()
@@ -165,7 +174,7 @@ def get_dataset_configuration(dataset):
         generator = [('a', dict())]
     elif dataset == 'EIB':
         generator = (('_'.join(duration), dict(durations=duration))
-                     for duration in [('1yr',), ('1yr', '5yr'),('1yr', '5yr','10yr')])
+                     for duration in [('1yr',), ('1yr', '5yr'),('1yr', '5yr','10yr'),('1yr', '5yr','10yr','20yr'),('1yr', '5yr','10yr','20yr','30yr')])
                      #for duration in [('1yr',)])
     else:
         # if the dataset is not recognized, it raises an exception
@@ -227,15 +236,15 @@ def main(args):
                 # Get the dataset configuration
                 result_dir = name_train_script_result_dir(args.p, args.q, args.hidden_dims)
                 generator = get_dataset_configuration(dataset)
-                for spec, data_params in generator:
+                for spec, data_params in generator: #('1yr', {'durations': '1yr'})    ('1yr_5yr', {'durations': '1yr_5yr'})  ('1yr_5yr_10yr', {'durations': '1yr_5yr_10yr'})
                     run(
-                        algo_id=algo_id,
-                        base_config=base_config,
-                        data_params=data_params,
-                        dataset=dataset,
-                        base_dir=args.base_dir,
-                        spec=spec,
-                        result_dir=result_dir,
+                        algo_id=algo_id, #T 'SigCWGAN'
+                        base_config=base_config, #T device='cuda'| seed=0 | batch_size=200 | hidden_dims=(50,50,50) | p=3 | q=3 | total_steps=1000   
+                        data_params=data_params, #T {'durations': '1yr'}   {'durations': '1yr_5yr'}
+                        dataset=dataset, #T EIB
+                        base_dir=args.base_dir, #T Numerical Results
+                        spec=spec, #T  '1yr'     '1yr_5yr'
+                        result_dir=result_dir,  #T return 'p={}_q={}_hidden_dims={}'.format(str(p), str(q), str(hidden_dims))
                     )
 
 

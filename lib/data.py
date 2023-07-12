@@ -370,11 +370,11 @@ def get_data(data_type, p, q, **data_params):
     elif data_type == 'ECG':
         pipeline, x_real_raw, x_real = get_mit_arrythmia_dataset(**data_params)
     elif data_type == 'EIB':
-        pipeline, x_real_raw, x_real = get_eib_dataset(**data_params, with_vol=False)
+        pipeline, x_real_raw, x_real = get_eib_dataset(**data_params, with_vol=False) #T x_real is the preprocessed version
     else:
         raise NotImplementedError('Dataset %s not valid' % data_type)
     assert x_real.shape[0] == 1
-    x_real = rolling_window(x_real[0], p + q)
+    x_real = rolling_window(x_real[0], p + q) #T Creates the Lag versions in real data
     return x_real
 
 
