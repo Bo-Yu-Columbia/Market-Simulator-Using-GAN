@@ -109,7 +109,7 @@ def run(algo_id, base_config, base_dir, dataset, spec, result_dir, data_params={
     x_real_train, x_real_test = x_real[:ind_train], x_real[ind_train:]
 
     # Initialize the chosen algorithm with the real data and the configurations
-    algo = get_algo(algo_id, base_config, dataset, data_params, x_real)  #Tunahan TODO left here
+    algo = get_algo(algo_id, base_config, dataset, data_params, x_real)  #Tunahan left here
 
     # Train the algorithm
     algo.fit()
