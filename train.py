@@ -174,8 +174,8 @@ def get_dataset_configuration(dataset):
         generator = [('a', dict())]
     elif dataset == 'EIB':
         generator = (('_'.join(duration), dict(durations=duration))
-                     for duration in [('1yr',), ('1yr', '5yr'),('1yr', '5yr','10yr'),('1yr', '5yr','10yr','20yr'),('1yr', '5yr','10yr','20yr','30yr')])
-                     #for duration in [('1yr',)])
+                     #for duration in [('1yr',), ('1yr', '5yr'),('1yr', '5yr','10yr'),('1yr', '5yr','10yr','20yr'),('1yr', '5yr','10yr','20yr','30yr')])
+                     for duration in [('1yr',),('5yr',),('10yr',),('20yr',),('30yr',)])
     else:
         # if the dataset is not recognized, it raises an exception
         raise Exception('%s not a valid data type.' % dataset)
