@@ -247,7 +247,7 @@ if __name__ == '__main__':
 
     # Meta parameters
     parser.add_argument('-base_dir', default='./numerical_results', type=str)
-    parser.add_argument('-use_cuda', action='store_true')
+    parser.add_argument('-use_cuda', action='store_true', default=True)
     parser.add_argument('-device', default=1, type=int)
     parser.add_argument('-num_seeds', default=1, type=int)
     parser.add_argument('-initial_seed', default=0, type=int)
@@ -262,7 +262,7 @@ if __name__ == '__main__':
     parser.add_argument('-p', default=3, type=int) # the length of past path p
     parser.add_argument('-q', default=3, type=int) # the length of future path q
     parser.add_argument('-hidden_dims', default=3 * (50,), type=tuple) # TODO: the hidden dimension of the generator and the discriminator??? by Bo
-    parser.add_argument('-total_steps', default=1000, type=int)
+    parser.add_argument('-total_steps', default=1, type=int)
     
     # Parsing command-line arguments
     args = parser.parse_args()
