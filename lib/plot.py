@@ -199,6 +199,7 @@ def create_summary(dataset, device, G, lags_past, steps, x_real, experiment_dire
 
     # Convert x_fake and x_real to pandas DataFrames
     df_fake = pd.DataFrame(x_fake_future1)
+    df_fake_one_column = df_fake
     df_real = pd.DataFrame(x_real)
 
     #Convert one column fake data to different columns : (note: 4805 is for the EIB dataset)
@@ -214,7 +215,8 @@ def create_summary(dataset, device, G, lags_past, steps, x_real, experiment_dire
     # Save DataFrames to Excel file
     #save_path = '/home/tg2885/project_of_EIB'
     save_path = experiment_directory
-    combined_df.to_excel(f'{save_path}/{algo_id}_{spec}_fake.xlsx', index=False)
+    combined_df.to_excel(f'{save_path}/{algo_id}_{spec}_fake_different_column.xlsx', index=False)
+    df_fake_one_column.to_excel(f'{save_path}/{algo_id}_{spec}_fake.xlsx', index=False)
     df_real.to_excel(f'{save_path}/{algo_id}_{spec}_real.xlsx', index=False)
 
     return x_fake_future
