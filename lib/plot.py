@@ -166,7 +166,7 @@ def savefig(filename, directory):
 #         plot_summary(x_fake=x_fake_future, x_real=x_real, max_lag=3)
 #     return x_fake_future
 
-def create_summary(dataset, device, G, lags_past, steps, x_real, one=False):
+def create_summary(experiment_directory, dataset, device, G, lags_past, steps, x_real, one=False):
     # Generates a summary plot for a given dataset using a generative model G. The function
     # first generates fake data using the model, and then calls plot_summary to create the
     # summary plot. The generated fake data is also returned.
@@ -202,7 +202,8 @@ def create_summary(dataset, device, G, lags_past, steps, x_real, one=False):
     df_real = pd.DataFrame(x_real)
 
     # Save DataFrames to Excel file
-    save_path = '/home/tg2885/project_of_EIB'
+    #save_path = '/home/tg2885/project_of_EIB'
+    save_path = experiment_directory
     df_fake.to_excel(f'{save_path}/1yearyield_only_fake_data.xlsx', index=False)
     df_real.to_excel(f'{save_path}/1yearyield_only_real_data.xlsx', index=False)
 
