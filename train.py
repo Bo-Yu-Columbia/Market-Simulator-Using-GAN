@@ -115,7 +115,7 @@ def run(algo_id, base_config, base_dir, dataset, spec, result_dir, data_params={
     algo.fit()
 
     # After the training, we create a summary of the experiment
-    create_summary(dataset, base_config.device, algo.G, base_config.p, base_config.q, x_real, experiment_directory)
+    create_summary(dataset, base_config.device, algo.G, base_config.p, base_config.q, x_real, experiment_directory, algo_id, spec)
 
     # Save the summary as an image in the experiment directory
     savefig('summary.png', experiment_directory)
