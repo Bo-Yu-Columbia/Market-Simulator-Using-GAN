@@ -205,7 +205,7 @@ def create_summary(dataset, device, G, lags_past, steps, x_real, experiment_dire
     list_index_numbers = [0] + [4805*i for i in range(1,int(len(df_fake)/4805) + 1)]
     list1 = []
     for i in range(len(list_index_numbers)-1):
-        list1.append(df[list_index_numbers[i]:list_index_numbers[i+1]])
+        list1.append(df_fake[list_index_numbers[i]:list_index_numbers[i+1]])
     for df in list1:
         df.reset_index(drop=True, inplace=True)
     # Concatenate the dataframes into a single dataframe with 30 columns
