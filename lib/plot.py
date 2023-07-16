@@ -204,9 +204,9 @@ def create_summary(dataset, device, G, lags_past, steps, x_real, one=False):
     # Save DataFrames to Excel file
     import os
 
-    username = os.getlogin()
-    save_path = f'/home/{username}/project_of_EIB' # Assuming the path exists
-    df_fake.to_excel(f'{save_path}/1yearyield_only_fake_data.xlsx', index=False)
-    df_real.to_excel(f'{save_path}/1yearyield_only_real_data.xlsx', index=False)
+    # username = os.getlogin()
+    # save_path = f'/home/{username}/project_of_EIB' # Assuming the path exists
+    # df_fake.to_excel(f'{save_path}/1yearyield_only_fake_data.xlsx', index=False)
+    # df_real.to_excel(f'{save_path}/1yearyield_only_real_data.xlsx', index=False)
 
     return x_fake_future

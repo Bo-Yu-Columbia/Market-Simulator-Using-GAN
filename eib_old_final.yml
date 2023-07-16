@@ -104,7 +104,7 @@ dependencies:
     - packaging==23.1
     - pandas==2.0.1
     - pillow==9.5.0
-    - signatory==1.2.1.1.4.0
+    - signatory==1.2.4.1.7.1 --no-cache-dir --force-reinstall
     - soundfile==0.12.1
     - tzdata==2023.3
     - wfdb==4.1.1
