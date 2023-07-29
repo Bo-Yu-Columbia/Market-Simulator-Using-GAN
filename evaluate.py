@@ -250,7 +250,8 @@ def evaluate_benchmarks(algos, base_dir, datasets, use_cuda=False):
                         # Evaluate the generator for the current algorithm and seed
                         experiment_summary = evaluate_generator(
                             model_name=algo_dir,
-                            seed=seed_dir.split('_')[-1],
+                            #seed=seed_dir.split('_')[-1]
+                            seed=seed_dir,
                             experiment_dir=algo_path,
                             dataset=dataset_dir,
                             use_cuda=use_cuda
