@@ -175,7 +175,7 @@ def get_dataset_configuration(dataset):
     elif dataset == 'EIB':
         generator = (('_'.join(duration), dict(durations=duration))
                      #for duration in [('1yr',), ('1yr', '5yr'),('1yr', '5yr','10yr'),('1yr', '5yr','10yr','20yr'),('1yr', '5yr','10yr','20yr','30yr')])
-                     for duration in [('1yr',),('5yr',),('10yr',),('20yr',),('30yr',), ('1yr', '5yr'),('1yr', '5yr','10yr'),('1yr', '5yr','10yr','20yr'),('1yr', '5yr','10yr','20yr','30yr')])
+                     for duration in [('1yr',), ('5yr',), ('10yr',), ('20yr',), ('30yr',), ('1yr', '5yr'), ('1yr', '10yr'), ('1yr', '20yr'), ('1yr', '30yr'), ('5yr', '10yr'), ('5yr', '20yr'), ('5yr', '30yr'), ('10yr', '20yr'), ('10yr', '30yr'), ('20yr', '30yr'), ('1yr', '5yr', '10yr'), ('1yr', '5yr', '20yr'), ('1yr', '5yr', '30yr'), ('1yr', '10yr', '20yr'), ('1yr', '10yr', '30yr'), ('1yr', '20yr', '30yr'), ('5yr', '10yr', '20yr'), ('5yr', '10yr', '30yr'), ('5yr', '20yr', '30yr'), ('1yr', '5yr', '10yr', '20yr'), ('1yr', '5yr', '10yr', '30yr'), ('1yr', '5yr', '20yr', '30yr'), ('1yr', '10yr', '20yr', '30yr'), ('5yr', '10yr', '20yr', '30yr'), ('1yr', '5yr', '10yr', '20yr', '30yr')])
     else:
         # if the dataset is not recognized, it raises an exception
         raise Exception('%s not a valid data type.' % dataset)
