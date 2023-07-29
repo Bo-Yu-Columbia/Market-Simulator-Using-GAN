@@ -263,12 +263,6 @@ SIGCWGAN_CONFIGS = dict(
         sig_config_future=SignatureConfig(depth=2,
                                           augmentations=tuple([Scale(0.2), Cumsum(), AddLags(m=2), LeadLag()])),
     ),
-    EIB_30yr=SigCWGANConfig(
-        mc_size=1000,
-        sig_config_past=SignatureConfig(depth=2, augmentations=tuple([Scale(0.2), Cumsum(), AddLags(m=2), LeadLag()])),
-        sig_config_future=SignatureConfig(depth=2,
-                                          augmentations=tuple([Scale(0.2), Cumsum(), AddLags(m=2), LeadLag()])),
-    ),
     EIB_1yr_5yr_10yr_30yr=SigCWGANConfig(
         mc_size=1000,
         sig_config_past=SignatureConfig(depth=2, augmentations=tuple([Scale(0.2), Cumsum(), AddLags(m=2), LeadLag()])),
