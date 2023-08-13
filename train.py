@@ -175,7 +175,13 @@ def get_dataset_configuration(dataset):
     elif dataset == 'EIB':
         generator = (('_'.join(duration), dict(durations=duration))
                      #for duration in [('1yr',), ('1yr', '5yr'),('1yr', '5yr','10yr'),('1yr', '5yr','10yr','20yr'),('1yr', '5yr','10yr','20yr','30yr')])
-                     for duration in [('1yr',), ('5yr',), ('10yr',), ('20yr',), ('30yr',), ('1yr', '5yr'), ('1yr', '10yr'), ('1yr', '20yr'), ('1yr', '30yr'), ('5yr', '10yr'), ('5yr', '20yr'), ('5yr', '30yr'), ('10yr', '20yr'), ('10yr', '30yr'), ('20yr', '30yr'), ('1yr', '5yr', '10yr'), ('1yr', '5yr', '20yr'), ('1yr', '5yr', '30yr'), ('1yr', '10yr', '20yr'), ('1yr', '10yr', '30yr'), ('1yr', '20yr', '30yr'), ('5yr', '10yr', '20yr'), ('5yr', '10yr', '30yr'), ('5yr', '20yr', '30yr'), ('1yr', '5yr', '10yr', '20yr'), ('1yr', '5yr', '10yr', '30yr'), ('1yr', '5yr', '20yr', '30yr'), ('1yr', '10yr', '20yr', '30yr'), ('5yr', '10yr', '20yr', '30yr'), ('1yr', '5yr', '10yr', '20yr', '30yr')])
+                     for duration in [('1yr',), ('5yr',), ('10yr',), ('20yr',), ('30yr',), ('1yr', '5yr'), ('1yr', '10yr'), ('1yr', '20yr'), ('1yr', '30yr'), ('5yr', '10yr'),
+                                      ('5yr', '20yr'), ('5yr', '30yr'), ('10yr', '20yr'), ('10yr', '30yr'), ('20yr', '30yr'), ('1yr', '5yr', '10yr'), ('1yr', '5yr', '20yr'),
+                                      ('1yr', '5yr', '30yr'), ('1yr', '10yr', '20yr'), ('1yr', '10yr', '30yr'), ('1yr', '20yr', '30yr'), ('5yr', '10yr', '20yr'),
+                                      ('5yr', '10yr', '30yr'), ('5yr', '20yr', '30yr'), ('1yr', '5yr', '10yr', '20yr'), ('1yr', '5yr', '10yr', '30yr'),
+                                      ('1yr', '5yr', '20yr', '30yr'), ('1yr', '10yr', '20yr', '30yr'), ('5yr', '10yr', '20yr', '30yr'), ('1yr', '5yr', '10yr', '20yr', '30yr')])
+    elif dataset == 'EIBTSC':
+        generator = 'EIBTSC'
     else:
         # if the dataset is not recognized, it raises an exception
         raise Exception('%s not a valid data type.' % dataset)
@@ -236,15 +242,15 @@ def main(args):
                 # Get the dataset configuration
                 result_dir = name_train_script_result_dir(args.p, args.q, args.hidden_dims)
                 generator = get_dataset_configuration(dataset)
-                for spec, data_params in generator: #('1yr', {'durations': '1yr'})    ('1yr_5yr', {'durations': '1yr_5yr'})  ('1yr_5yr_10yr', {'durations': '1yr_5yr_10yr'})
+                for spec, data_params in generator:
                     run(
-                        algo_id=algo_id, #T 'SigCWGAN'
-                        base_config=base_config, #T device='cuda'| seed=0 | batch_size=200 | hidden_dims=(50,50,50) | p=3 | q=3 | total_steps=1000   
-                        data_params=data_params, #T {'durations': '1yr'}   {'durations': '1yr_5yr'}
-                        dataset=dataset, #T EIB
-                        base_dir=args.base_dir, #T Numerical Results
-                        spec=spec, #T  '1yr'     '1yr_5yr'
-                        result_dir=result_dir,  #T return 'p={}_q={}_hidden_dims={}'.format(str(p), str(q), str(hidden_dims))
+                        algo_id=algo_id,
+                        base_config=base_config,
+                        data_params=data_params,
+                        dataset=dataset,
+                        base_dir=args.base_dir,
+                        spec=spec,
+                        result_dir=result_dir,
                     )
 
 
@@ -263,7 +269,7 @@ if __name__ == '__main__':
 
     # The datasets and algos can be rearranged so that the order at which datasets are trained could be different
     # Also, if you are interested in learning about one dataset, you can can just set the default to be that one dataset
-    parser.add_argument('-datasets', default=['YIELD', 'EXCHANGE', 'ECG', 'ARCH', 'STOCKS', 'VAR', 'EIB' ], nargs="+")
+    parser.add_argument('-datasets', default=['YIELD', 'EXCHANGE', 'ECG', 'ARCH', 'STOCKS', 'VAR', 'EIB', 'EIBTSC' ], nargs="+")
     parser.add_argument('-algos', default=['SigCWGAN', 'GMMN', 'RCGAN', 'TimeGAN', 'RCWGAN', ], nargs="+")
 
     # Algo hyperparameters - you can change these and may achieve better result
