@@ -1,0 +1,7 @@
+./data
+./data2
+./lib/__pycache__
+./lib/algos/__pycache__
+./__pycache__
+./.idea
+./numerical_results
