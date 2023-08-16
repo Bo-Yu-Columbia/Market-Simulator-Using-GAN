@@ -38,9 +38,11 @@ def get_algo_config(dataset, data_params):
     elif dataset == 'YIELD':
         key += '_' + '_'.join(data_params['durations'])
     elif dataset == 'EIB':
-        key += '_' + '_'.join(data_params['durations']) #T key = 'EIB_1yr_5yr_10yr'
+        key += '_' + '_'.join(data_params['durations'])
     elif dataset == 'EXCHANGE':
         key += '_' + '_'.join(data_params['exchanges'])
+    elif dataset == 'EIBTSC':
+        key = key
     return SIGCWGAN_CONFIGS[key]
 
 
@@ -89,20 +91,11 @@ def run(algo_id, base_config, base_dir, dataset, spec, result_dir, data_params={
     spec: Specification parameters.
     data_params: The parameters of the dataset.
     """
-#T    run(
-#T     algo_id=algo_id, #'SigCWGAN'
-#T     base_config=base_config, # device='cuda'| seed=0 | batch_size=200 | hidden_dims=(50,50,50) | p=3 | q=3 | total_steps=1000   
-#T     data_params=data_params, #{'durations': '1yr'}   {'durations': '1yr_5yr'}
-#T     dataset=dataset, #EIB
-#T     base_dir=args.base_dir, #Numerical Results
-#T     spec=spec, # '1yr'     '1yr_5yr'
-#T     result_dir=result_dir,  #return 'p={}_q={}_hidden_dims={}'.format(str(p), str(q), str(hidden_dims))
-#T   )
     print('Executing: %s, %s, %s' % (algo_id, dataset, spec))
     experiment_directory = pt.join(base_dir, dataset, result_dir, spec, 'seed={}'.format(base_config.seed), algo_id)
     if not pt.exists(experiment_directory):
         os.makedirs(experiment_directory)
-    set_seed(base_config.seed) #T seed=0 | Setting the seed allows for reproducibility, meaning that if you run the same code multiple times with the same seed, you will get the same sequence of random numbers each time.
+    set_seed(base_config.seed)
     x_real = get_data(dataset, base_config.p, base_config.q, **data_params)
     x_real = x_real.to(base_config.device)
     ind_train = int(x_real.shape[0] * 0.8)
@@ -175,13 +168,14 @@ def get_dataset_configuration(dataset):
     elif dataset == 'EIB':
         generator = (('_'.join(duration), dict(durations=duration))
                      #for duration in [('1yr',), ('1yr', '5yr'),('1yr', '5yr','10yr'),('1yr', '5yr','10yr','20yr'),('1yr', '5yr','10yr','20yr','30yr')])
-                     for duration in [('1yr',), ('5yr',), ('10yr',), ('20yr',), ('30yr',), ('1yr', '5yr'), ('1yr', '10yr'), ('1yr', '20yr'), ('1yr', '30yr'), ('5yr', '10yr'),
-                                      ('5yr', '20yr'), ('5yr', '30yr'), ('10yr', '20yr'), ('10yr', '30yr'), ('20yr', '30yr'), ('1yr', '5yr', '10yr'), ('1yr', '5yr', '20yr'),
-                                      ('1yr', '5yr', '30yr'), ('1yr', '10yr', '20yr'), ('1yr', '10yr', '30yr'), ('1yr', '20yr', '30yr'), ('5yr', '10yr', '20yr'),
-                                      ('5yr', '10yr', '30yr'), ('5yr', '20yr', '30yr'), ('1yr', '5yr', '10yr', '20yr'), ('1yr', '5yr', '10yr', '30yr'),
-                                      ('1yr', '5yr', '20yr', '30yr'), ('1yr', '10yr', '20yr', '30yr'), ('5yr', '10yr', '20yr', '30yr'), ('1yr', '5yr', '10yr', '20yr', '30yr')])
+                     for duration in [('1yr', '5yr','10yr','20yr', '20yr','30yr')])
+                     # for duration in [('1yr',), ('5yr',), ('10yr',), ('20yr',), ('30yr',), ('1yr', '5yr'), ('1yr', '10yr'), ('1yr', '20yr'), ('1yr', '30yr'), ('5yr', '10yr'),
+                     #                  ('5yr', '20yr'), ('5yr', '30yr'), ('10yr', '20yr'), ('10yr', '30yr'), ('20yr', '30yr'), ('1yr', '5yr', '10yr'), ('1yr', '5yr', '20yr'),
+                     #                  ('1yr', '5yr', '30yr'), ('1yr', '10yr', '20yr'), ('1yr', '10yr', '30yr'), ('1yr', '20yr', '30yr'), ('5yr', '10yr', '20yr'),
+                     #                  ('5yr', '10yr', '30yr'), ('5yr', '20yr', '30yr'), ('1yr', '5yr', '10yr', '20yr'), ('1yr', '5yr', '10yr', '30yr'),
+                     #                  ('1yr', '5yr', '20yr', '30yr'), ('1yr', '10yr', '20yr', '30yr'), ('5yr', '10yr', '20yr', '30yr'), ('1yr', '5yr', '10yr', '20yr', '30yr')])
     elif dataset == 'EIBTSC':
-        generator = 'EIBTSC'
+        generator = [('EIBTSC', {'filepath': r"./data/EIB_TSC.xlsx"})]
     else:
         # if the dataset is not recognized, it raises an exception
         raise Exception('%s not a valid data type.' % dataset)
