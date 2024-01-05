@@ -1,12 +1,8 @@
-Research Project for European Investment Bank
+## Research Project for European Investment Bank
 
-#The authors' official PyTorch SigCWGAN implementation.
 
-This repository is the official implementation of [Conditional Sig-Wasserstein GANs for Time Series Generation]
 
-Authors:
-
-Paper Link:
+This project is based on the official implementation of [Conditional Sig-Wasserstein GANs for Time Series Generation]
 
 ## Requirements
 
