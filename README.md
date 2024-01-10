@@ -14,7 +14,7 @@ conda env create -f requirements.yml
 ```
 
 
-We compare our SigCGAN with several baselines including: TimeGAN, RCGAN, GMMN(GAN with MMD).
+We compare SigCGAN with several baselines including: TimeGAN, RCGAN, GMMN(GAN with MMD) with different training methods.
 
 
 ## Training
