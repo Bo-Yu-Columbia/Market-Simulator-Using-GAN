@@ -1,8 +1,9 @@
 ## Research Project for European Investment Bank
+This project is a joint project for Columbia Engineering and the European Investment Bank for data analysis purposes.
+
+![Poster](github/poster.jpg)
 
 
-
-This project is based on the official implementation of [Conditional Sig-Wasserstein GANs for Time Series Generation]
 
 ## Requirements
 
@@ -12,24 +13,11 @@ To setup the conda enviroment:
 conda env create -f requirements.yml
 ```
 
-## Datasets
 
-This repository contains implementations of synthetic and empirical datasets.
-
-- Synthetic:
-    - Vector autoregressive (VAR) data
-    - Autoregressive conditionally heteroscedastic (ARCH)
-- Real-world data:
-    - Stock data: https://realized.oxford-man.ox.ac.uk/data
-
-## Baselines
-
-We compare our SigCGAN with several baselines including: TimeGAN, RCGAN, GMMN(GAN with MMD). The baselines functions are in sig_lib/baselines.py
+We compare our SigCGAN with several baselines including: TimeGAN, RCGAN, GMMN(GAN with MMD).
 
 
 ## Training
-
-To reproduce the numerical results in the paper, save weights and produce a training summaries, run the following line:
 
 ```train
 python train.py -use_cuda -total_steps 1000
